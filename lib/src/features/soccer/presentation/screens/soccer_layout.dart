@@ -34,13 +34,27 @@ class SoccerLayout extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.sports_soccer_rounded),
-                label: AppStrings.fixtures,
+                label: AppStrings.games, // Changed fixtures to games
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.bar_chart),
                 label: AppStrings.standings,
               ),
+              BottomNavigationBarItem( // Added Odds item
+                icon: Icon(Icons.insert_chart),
+                label: AppStrings.odds,
+              ),
+              BottomNavigationBarItem( // Added Lives item
+                icon: Icon(Icons.live_tv),
+                label: AppStrings.live,
+              ),
+              BottomNavigationBarItem( // Added Bookies item
+                icon: Icon(Icons.book_online),
+                label: AppStrings.bookies,
+              ),
             ],
+            unselectedItemColor: Colors.grey, // Inactive color
+            selectedItemColor: Colors.blue,   // Active color
           ),
         );
       },

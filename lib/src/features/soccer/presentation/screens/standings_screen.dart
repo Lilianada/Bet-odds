@@ -19,12 +19,21 @@ class StandingsScreen extends StatefulWidget {
 
 class _StandingsScreenState extends State<StandingsScreen> {
   Standings? standings;
+  TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    SoccerCubit cubit = context.read<SoccerCubit>();
+    cubit.resetFilters();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SoccerCubit, SoccerStates>(
       listener: (context, state) {
         if (state is SoccerStandingsLoaded) standings = state.standings;
+        print("Received Standings: ${standings.toString()}"); 
       },
       builder: (context, state) {
         SoccerCubit cubit = context.read<SoccerCubit>();
@@ -32,8 +41,26 @@ class _StandingsScreenState extends State<StandingsScreen> {
         return ListView(
           physics: const BouncingScrollPhysics(),
           children: [
-            LeaguesView(leagues: cubit.filteredLeagues, getFixtures: false),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  labelText: 'Search',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onChanged: (value) {
+                  // Implement the search logic here
+                },
+              ),
+            ),
             const SizedBox(height: AppSize.s5),
+            
+            LeaguesView(leagues: cubit.filteredLeagues, getFixtures: false),
+            
             if (state is SoccerStandingsLoading)
               const Center(
                   child: LinearProgressIndicator(color: AppColors.deepOrange)),
@@ -46,6 +73,16 @@ class _StandingsScreenState extends State<StandingsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Example of displaying league details
+                      Row(
+                        children: [
+                          Image.network(standings!.standings[index][0].team.logo, width: 40, height: 40), // Assuming each team has a logo
+                          const SizedBox(width: 10),
+                          Text(standings!.standings[index][0].team.name), // Assuming each team has a name
+                        ],
+                      ),
+                      const SizedBox(height: AppSize.s10),
+
                       const StandingsHeaders(),
                       const SizedBox(height: AppSize.s10),
                       ...List.generate(standings!.standings[index].length,

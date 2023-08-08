@@ -88,7 +88,7 @@ class _SoccerScreenState extends State<SoccerScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (cubit.filteredLeagues.isNotEmpty) ...[
-                          LeaguesHeader(leagues: cubit.filteredLeagues),
+                          LeaguesHeader(leagues: cubit.filteredLeagues, leagueName: null,),
                           const SizedBox(height: AppSize.s10),
                         ],
                         if (liveFixtures.isNotEmpty) ...[

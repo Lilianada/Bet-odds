@@ -2,6 +2,12 @@ class AppStrings {
   AppStrings._();
   static const String noRouteFound = "No Route Found";
   static const String home = "Home";
+  static const bookies = "Bookies";
+  static const odds = "Odds";
+  static const String homeTeam = "Home Team";
+  static const String awayTeam = "Away Team";
+  static const String homeOdds = "Home Odds";
+  static const games = "Games";
   static const String fixtures = "Fixtures";
   static const String standings = "Standings";
   static const String liveScore = "Live Score";

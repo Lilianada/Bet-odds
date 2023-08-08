@@ -2,7 +2,7 @@ import '../../features/soccer/domain/entities/league_of_fixture.dart';
 
 class AppConstants {
   AppConstants._();
-  static const String baseUrl = "https://v3.football.api-sports.io/";
+  static const String baseUrl = "https://api-football-v1.p.rapidapi.com/v3/";
   static const int timeOutDuration = 90;
   static const int maxNameLength = 3;
 

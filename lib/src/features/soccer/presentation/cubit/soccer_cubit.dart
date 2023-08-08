@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:live_score/src/features/odds/presentation/screens/betting_odds_screen.dart';
 
 import '../../../../core/domain/entities/league.dart';
 import '../../../../core/domain/entities/soccer_fixture.dart';
@@ -33,12 +34,14 @@ class SoccerCubit extends Cubit<SoccerStates> {
     const SoccerScreen(),
     const FixturesScreen(),
     const StandingsScreen(),
+    const BettingOddsScreen(),
   ];
 
   List<String> titles = [
     AppStrings.liveScore,
     AppStrings.fixtures,
     AppStrings.standings,
+    AppStrings.odds,
   ];
 
   int currentIndex = 0;
@@ -52,67 +55,82 @@ class SoccerCubit extends Cubit<SoccerStates> {
 
   Future<List<League>> getLeagues() async {
     emit(SoccerLeaguesLoading());
-    filteredLeagues = [];
-    final leagues = await leaguesUseCase(NoParams());
-    leagues.fold(
-      (left) => emit(SoccerLeaguesLoadFailure(left.message)),
-      (right) {
-        for (League league in right) {
-          if (AppConstants.availableLeagues.contains(league.id)) {
-            filteredLeagues.add(league);
-            AppConstants.leaguesFixtures
-                .putIfAbsent(league.id, () => LeagueOfFixture(league: league));
-          }
+    
+    try {
+        final leaguesResult = await leaguesUseCase(NoParams());
+        
+        // Print the result from the leaguesUseCase
+        print("Received leagues result: $leaguesResult");
+        
+        // Assuming leaguesResult is either a Left or Right type, e.g., from Dartz package
+        if (leaguesResult.isRight()) {
+            final leagues = leaguesResult.getOrElse(() => []);
+            
+            // Print the processed leagues
+            print("Processed leagues: $leagues");
+            
+            for (League league in leagues) {
+                filteredLeagues.add(league);
+                AppConstants.leaguesFixtures
+                    .putIfAbsent(league.id, () => LeagueOfFixture(league: league));
+            }
+            emit(SoccerLeaguesLoaded(filteredLeagues));
+        } else {
+            emit(SoccerLeaguesLoadFailure(leaguesResult.fold((l) => l.message, (r) => '')));
         }
-        emit(SoccerLeaguesLoaded(filteredLeagues));
-      },
-    );
+    } catch (error) {
+        // Print any errors
+        print("Error in getLeagues: $error");
+        emit(SoccerLeaguesLoadFailure(error.toString()));
+    }
+    
     return filteredLeagues;
-  }
+}
+
 
   List<SoccerFixture> dayFixtures = [];
 
   Future<List<SoccerFixture>> getFixtures() async {
     emit(SoccerFixturesLoading());
     String date = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    final fixtures = await dayFixturesUseCase(date);
-    List<SoccerFixture> filteredFixtures = [];
-    fixtures.fold(
-      (left) => emit(SoccerFixturesLoadFailure(left.message)),
-      (right) {
+    final fixturesEither = await dayFixturesUseCase(date);
+    List<SoccerFixture> fixtures = fixturesEither.fold(
+      (failure) {
+        emit(SoccerFixturesLoadFailure(failure.message));
+        return <SoccerFixture>[];
+      },
+      (fixtureList) {
         AppConstants.leaguesFixtures.forEach((key, value) {
           value.fixtures.clear();
         });
-        for (SoccerFixture fixture in right) {
-          if (AppConstants.availableLeagues
-              .contains(fixture.fixtureLeague.id)) {
-            filteredFixtures.add(fixture);
+        for (SoccerFixture fixture in fixtureList) {
+          dayFixtures.add(fixture);
+          if (AppConstants.leaguesFixtures[fixture.fixtureLeague.id] != null) {
             AppConstants.leaguesFixtures[fixture.fixtureLeague.id]!.fixtures
                 .add(fixture);
           }
-          dayFixtures = filteredFixtures;
         }
-        emit(SoccerFixturesLoaded(filteredFixtures));
+        emit(SoccerFixturesLoaded(dayFixtures));
+        return fixtureList;
       },
     );
-    return filteredFixtures;
+    return fixtures;
   }
 
   Future<List<SoccerFixture>> getLiveFixtures() async {
     emit(SoccerFixturesLoading());
-    final liveFixtures = await liveFixturesUseCase(NoParams());
-    List<SoccerFixture> filteredFixtures = [];
-    liveFixtures.fold(
-      (left) => emit(SoccerLiveFixturesLoadFailure(left.message)),
-      (right) {
-        filteredFixtures = right
-            .where((fixture) => AppConstants.availableLeagues
-                .contains(fixture.fixtureLeague.id))
-            .toList();
-        emit(SoccerLiveFixturesLoaded(filteredFixtures));
+    final liveFixturesEither = await liveFixturesUseCase(NoParams());
+    List<SoccerFixture> liveFixtures = liveFixturesEither.fold(
+      (failure) {
+        emit(SoccerLiveFixturesLoadFailure(failure.message));
+        return <SoccerFixture>[];
+      },
+      (fixtureList) {
+        emit(SoccerLiveFixturesLoaded(fixtureList));
+        return fixtureList;
       },
     );
-    return filteredFixtures;
+    return liveFixtures;
   }
 
   List<SoccerFixture> currentFixtures = [];
@@ -129,6 +147,25 @@ class SoccerCubit extends Cubit<SoccerStates> {
       (left) => emit(SoccerStandingsLoadFailure(left.message)),
       (right) {
         emit(SoccerStandingsLoaded(right));
+      },
+    );
+  }
+
+  Future<void> resetFilters() async {
+    filteredLeagues = [];
+    AppConstants.leaguesFixtures.clear();
+    final leagues = await leaguesUseCase(NoParams());
+    leagues.fold(
+      (left) => emit(SoccerLeaguesLoadFailure(left.message)),
+      (right) {
+        for (League league in right) {
+          if (AppConstants.availableLeagues.contains(league.id)) {
+            filteredLeagues.add(league);
+            AppConstants.leaguesFixtures
+                .putIfAbsent(league.id, () => LeagueOfFixture(league: league));
+          }
+        }
+        emit(SoccerLeaguesLoaded(filteredLeagues));
       },
     );
   }

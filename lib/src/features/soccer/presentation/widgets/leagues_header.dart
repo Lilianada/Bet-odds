@@ -12,7 +12,7 @@ import 'league_card.dart';
 class LeaguesHeader extends StatelessWidget {
   final List<League> leagues;
 
-  const LeaguesHeader({Key? key, required this.leagues}) : super(key: key);
+  const LeaguesHeader({Key? key, required this.leagues, required leagueName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
