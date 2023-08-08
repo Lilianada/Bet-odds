@@ -33,3 +33,4 @@ The Live Score application is a football sports application that presents the re
 - Clean code
 - Clean architecture
 - [Restful api](https://www.api-football.com/documentation-v3)
+# odspratnu
