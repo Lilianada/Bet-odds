@@ -39,12 +39,14 @@ extension FixtureLeagueExtension on FixtureLeagueModel {
 
 extension OddsExtension on BettingOddsModel {
   BettingOdds toDomain() => BettingOdds(
-        homeOdds: homeOdds,
-        drawOdds: drawOdds,
-        homeTeamOdds: homeTeamOdds,
-        awayTeamOdds: awayTeamOdds,
-        homeTeam: homeTeam,
-        awayTeam: awayTeam, 
+        date: date,
+        oddsList: oddsList,
+        match: match,
+        fixture: fixture,
+        league: league,
+        teams: teams,
+        status: status,
+        odds: odds,
       );
 }
 
@@ -52,8 +54,6 @@ extension FixtureExtension on FixtureModel {
   Fixture toDomain() =>
       Fixture(id: id, date: date, referee: referee, status: status);
 }
-
-
 
 extension SoccerFixtureExtension on SoccerFixtureModel {
   SoccerFixture toDomain() => SoccerFixture(

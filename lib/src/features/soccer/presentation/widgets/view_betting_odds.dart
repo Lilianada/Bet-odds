@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/domain/entities/betting_odds.dart';
 import '../../../../core/utils/app_strings.dart';
 
-
 class ViewBettingOdds extends StatelessWidget {
   final List<BettingOdds> odds;
 
@@ -27,9 +26,9 @@ class ViewBettingOdds extends StatelessWidget {
       ],
       rows: odds
           .map((odd) => DataRow(cells: [
-                DataCell(Text(odd.homeTeam)),
-                DataCell(Text(odd.awayTeam)),
-                DataCell(Text('${odd.homeOdds}')),
+                DataCell(Text(odd.teams.home.id.toString())),
+                DataCell(Text(odd.teams.away.id.toString())),
+                DataCell(Text('${odd.match}')),
               ]))
           .toList(),
     );

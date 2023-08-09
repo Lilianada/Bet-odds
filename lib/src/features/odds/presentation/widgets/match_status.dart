@@ -28,7 +28,7 @@ class MatchStatus extends StatelessWidget {
                 ),
               ),
               Text(
-                DateFormat.yMMMd().format(DateTime.parse(date)),
+                DateFormat.yMMMd().format(DateTime.now()),
                 style: TextStyle(
                   fontSize: 14,
                 ),

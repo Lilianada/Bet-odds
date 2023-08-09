@@ -47,7 +47,7 @@ void initSoccer() {
       leaguesUseCase: sl<LeaguesUseCase>(),
       liveFixturesUseCase: sl<LiveFixturesUseCase>(),
       standingUseCase: sl<StandingsUseCase>(),
-      bettingOddsUseCase: sl<BettingOddsUseCase>(),
+      //bettingOddsUseCase: sl<BettingOddsUseCase>(),
     ),
   );
 }

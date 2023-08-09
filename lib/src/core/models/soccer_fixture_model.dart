@@ -12,14 +12,13 @@ import 'goals_model.dart';
 import 'teams_model.dart';
 
 class SoccerFixtureModel extends SoccerFixture {
-  const SoccerFixtureModel(
-      {required Fixture fixture,
-      required FixtureLeague fixtureLeague,
-      required Teams teams,
-      required Goals goals,
-      required BettingOdds odds,
-      })
-      : super(
+  const SoccerFixtureModel({
+    required Fixture fixture,
+    required FixtureLeague fixtureLeague,
+    required Teams teams,
+    required Goals goals,
+    BettingOdds? odds,
+  }) : super(
           fixture: fixture,
           fixtureLeague: fixtureLeague,
           teams: teams,
@@ -33,6 +32,8 @@ class SoccerFixtureModel extends SoccerFixture {
         fixtureLeague: FixtureLeagueModel.fromJson(json['league']).toDomain(),
         teams: TeamsModel.fromJson(json['teams']).toDomain(),
         goals: GoalsModel.fromJson(json['goals']).toDomain(),
-        odds: BettingOddsModel.fromJson(json['odds']).toDomain(),
+        odds: json['odds'] != null
+            ? BettingOddsModel.fromJson(json['odds']).toDomain()
+            : null,
       );
 }

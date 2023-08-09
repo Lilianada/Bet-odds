@@ -79,7 +79,7 @@ class SoccerDataSourceImpl implements SoccerDataSource {
   }
 
   @override
-Future<List<BettingOddsModel>> getOdds({required int leagueId}) async {
+  Future<List<BettingOddsModel>> getOdds({required int leagueId}) async {
     try {
       final response = await dioHelper
           .get(url: Endpoints.odds, queryParams: {"leagueId": leagueId});
@@ -91,8 +91,7 @@ Future<List<BettingOddsModel>> getOdds({required int leagueId}) async {
     } catch (error) {
       rethrow;
     }
-}
-
+  }
 }
 
 List<SoccerFixtureModel> _getResult(Response response) {

@@ -1,6 +1,5 @@
-import 'package:live_score/src/core/domain/entities/betting_odds.dart';
-
 import '../../domain/entities/standings.dart';
+import '../../../../core/domain/entities/league.dart';
 import '../../../../core/domain/entities/soccer_fixture.dart';
 
 abstract class SoccerStates {}
@@ -64,18 +63,3 @@ class SoccerStandingsLoadFailure extends SoccerStates {
 
   SoccerStandingsLoadFailure(this.message);
 }
-
-class SoccerOddsLoading extends SoccerStates {}
-
-class SoccerOddsLoadFailure extends SoccerStates {
-  final String message;
-
-  SoccerOddsLoadFailure(this.message);
-}
-
-class SoccerOddsLoaded extends SoccerStates {
-  final Map<int, BettingOdds> odds;
-
-  SoccerOddsLoaded(this.odds);
-}
-

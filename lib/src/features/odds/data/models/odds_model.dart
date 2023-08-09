@@ -1,11 +1,19 @@
+import 'package:live_score/src/core/domain/entities/betting_odds.dart';
+
 class BettingOddsModel {
-  final Fixture fixture;
-  final League league;
-  final Teams teams;
-  final Status status;
-  final List<BetOption> odds;
+  final String date;
+  final List<BettingOdds> oddsList;
+  final String match;
+  final BOFixture fixture;
+  final BOLeague league;
+  final BOTeams teams;
+  final BOStatus status;
+  final List<BOBetOption> odds;
 
   BettingOddsModel({
+    required this.date,
+    required this.oddsList,
+    required this.match,
     required this.fixture,
     required this.league,
     required this.teams,
@@ -15,23 +23,26 @@ class BettingOddsModel {
 
   factory BettingOddsModel.fromJson(Map<String, dynamic> json) {
     return BettingOddsModel(
-      fixture: Fixture.fromJson(json['fixture']),
-      league: League.fromJson(json['league']),
-      teams: Teams.fromJson(json['teams']),
-      status: Status.fromJson(json['status']),
-      odds: (json['odds'] as List).map((e) => BetOption.fromJson(e)).toList(),
+      date: json['date'],
+      oddsList: [],
+      match: json['match'],
+      fixture: BOFixture.fromJson(json['fixture']),
+      league: BOLeague.fromJson(json['league']),
+      teams: BOTeams.fromJson(json['teams']),
+      status: BOStatus.fromJson(json['status']),
+      odds: (json['odds'] as List).map((e) => BOBetOption.fromJson(e)).toList(),
     );
   }
 }
 
-class Fixture {
+class BOFixtureModel {
   final int id;
-  final Status status;
+  final BOStatusModel status;
   final String date;
   final String homeTeam;
   final String awayTeam;
 
-  Fixture({
+  BOFixtureModel({
     required this.id,
     required this.status,
     required this.date,
@@ -39,10 +50,10 @@ class Fixture {
     required this.awayTeam,
   });
 
-  factory Fixture.fromJson(Map<String, dynamic> json) {
-    return Fixture(
+  factory BOFixtureModel.fromJson(Map<String, dynamic> json) {
+    return BOFixtureModel(
       id: json['id'],
-      status: Status.fromJson(json['status']),
+      status: BOStatusModel.fromJson(json['status']),
       date: json['date'], // Assuming the JSON has 'date'
       homeTeam: json['homeTeam'], // Assuming the JSON has 'homeTeam'
       awayTeam: json['awayTeam'], // Assuming the JSON has 'awayTeam'
@@ -50,57 +61,58 @@ class Fixture {
   }
 }
 
-class League {
+class BOLeagueModel {
   final int id;
   final int season;
 
-  League({required this.id, required this.season});
+  BOLeagueModel({required this.id, required this.season});
 
-  factory League.fromJson(Map<String, dynamic> json) {
-    return League(
+  factory BOLeagueModel.fromJson(Map<String, dynamic> json) {
+    return BOLeagueModel(
       id: json['id'],
       season: json['season'],
     );
   }
 }
 
-class Teams {
-  final Team home;
-  final Team away;
+class BOTeamsModel {
+  final BOTeamModel home;
+  final BOTeamModel away;
 
-  Teams({required this.home, required this.away});
+  BOTeamsModel({required this.home, required this.away});
 
-  factory Teams.fromJson(Map<String, dynamic> json) {
-    return Teams(
-      home: Team.fromJson(json['home']),
-      away: Team.fromJson(json['away']),
+  factory BOTeamsModel.fromJson(Map<String, dynamic> json) {
+    return BOTeamsModel(
+      home: BOTeamModel.fromJson(json['home']),
+      away: BOTeamModel.fromJson(json['away']),
     );
   }
 }
 
-class Team {
+class BOTeamModel {
   final int id;
   final int goals;
 
-  Team({required this.id, required this.goals});
+  BOTeamModel({required this.id, required this.goals});
 
-  factory Team.fromJson(Map<String, dynamic> json) {
-    return Team(
+  factory BOTeamModel.fromJson(Map<String, dynamic> json) {
+    return BOTeamModel(
       id: json['id'],
       goals: json['goals'],
     );
   }
 }
 
-class Status {
+class BOStatusModel {
   final String long;
   final int elapsed;
   final String seconds;
 
-  Status({required this.long, required this.elapsed, required this.seconds});
+  BOStatusModel(
+      {required this.long, required this.elapsed, required this.seconds});
 
-  factory Status.fromJson(Map<String, dynamic> json) {
-    return Status(
+  factory BOStatusModel.fromJson(Map<String, dynamic> json) {
+    return BOStatusModel(
       long: json['long'],
       elapsed: json['elapsed'],
       seconds: json['seconds'],
