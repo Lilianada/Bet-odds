@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:live_score/src/features/odds/presentation/cubit/betting_odds_cubit.dart';
+import 'package:live_score/src/features/screens/splash_screen/splash_screen.dart';
 import 'package:live_score/src/features/soccer/presentation/screens/bettings_odds_screen.dart';
 // import 'package:live_score/src/features/odds/presentation/screens/betting_odds_screen.dart';
 
@@ -26,11 +27,26 @@ class Routes {
   static const String fixture = "fixture";
   static const String bookies = "bookies";
   static const String odds = "odds";
+  static const String splashScreen = "splashScreen";
 }
 
 class AppRouter {
   static Route routesGenerator(RouteSettings settings) {
     switch (settings.name) {
+      case Routes.splashScreen:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => sl<SoccerCubit>(),
+            child:  SplashScreen(),
+          ),
+        );
+      // case Routes.signup:
+      //   return MaterialPageRoute(
+      //     builder: (context) => BlocProvider(
+      //       // create: (context) => sl<>(),
+      //       child: const Login(),
+      //     ),
+      //   );
       case Routes.soccerLayout:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(

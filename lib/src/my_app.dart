@@ -10,7 +10,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.soccerLayout,
+      // initialRoute: Routes.soccerLayout,
+      initialRoute: Routes.splashScreen,
       onGenerateRoute: AppRouter.routesGenerator,
       theme: getAppTheme(),
     );
