@@ -28,7 +28,7 @@ class ViewBettingOdds extends StatelessWidget {
           .map((odd) => DataRow(cells: [
                 DataCell(Text(odd.teams.home.id.toString())),
                 DataCell(Text(odd.teams.away.id.toString())),
-                DataCell(Text('${odd.match}')),
+                DataCell(Text('${odd.update.toString()}')),
               ]))
           .toList(),
     );

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:live_score/src/features/auth/auth_injector.dart';
 import 'package:live_score/src/features/odds/odds_injector.dart';
 
 import 'core/api/dio_helper.dart';
@@ -16,6 +17,7 @@ void initApp() {
   initSoccer();
   initFixture();
   initOdds();
+  initAuth();
 }
 
 void initCore() {

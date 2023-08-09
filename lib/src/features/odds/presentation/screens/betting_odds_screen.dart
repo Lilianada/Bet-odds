@@ -8,7 +8,7 @@ import '../../../fixture/presentation/widgets/fixture_details.dart';
 class BettingOddsScreen extends StatelessWidget {
   final BettingOdds odds;
 
-  const  BettingOddsScreen({Key? key, required this.odds}) : super(key: key);
+  const BettingOddsScreen({Key? key, required this.odds}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +56,12 @@ class BettingOddsView extends StatelessWidget {
             AppStrings.homeOdds,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          Text(homeTeamOdds),
+          Text(homeTeamOdds!),
           const Text(
             AppStrings.awayOdds,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          Text(awayTeamOdds),
+          Text(awayTeamOdds!),
         ],
       ),
     );

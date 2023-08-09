@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:live_score/src/core/domain/mappers/mappers.dart';
 
 import '../../../../core/domain/entities/betting_odds.dart';
 import '../../../../core/error/error_handler.dart';
@@ -14,15 +15,16 @@ class BettingOddsRepositoryImpl implements BettingOddsRepository {
 
   BettingOddsRepositoryImpl({
     required this.bettingOddsDataSource,
-    required this.networkInfo, required bettingOddsRemoteDataSource,
+    required this.networkInfo,
   });
 
   @override
-  Future<Either<Failure, List<BettingOdds>>> getOdds({required String date}) async {
+  Future<Either<Failure, List<BettingOdds>>> getOdds(
+      {required String date}) async {
     if (await networkInfo.isConnected) {
       try {
         final result = await bettingOddsDataSource.getOdds(date: date);
-        final odds = result.cast<BettingOdds>();
+        final odds = result.map((fixture) => fixture.toDomain()).toList();
         return Right(odds);
       } on DioError catch (error) {
         return Left(ErrorHandler.handle(error).failure);
