@@ -17,6 +17,7 @@ class BettingOddsRepositoryImpl implements BettingOddsRepository {
     required this.networkInfo, required bettingOddsRemoteDataSource,
   });
 
+  @override
   Future<Either<Failure, List<BettingOdds>>> getOdds({required String date}) async {
     if (await networkInfo.isConnected) {
       try {

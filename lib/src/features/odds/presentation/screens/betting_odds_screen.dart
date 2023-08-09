@@ -1,43 +1,69 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/error/response_status.dart';
-import '../../../../core/widgets/center_indicator.dart';
-import '../../../soccer/presentation/widgets/block_dialog.dart';
-import '../../../soccer/presentation/widgets/view_betting_odds.dart';
-import '../cubit/betting_odds_cubit.dart';
-import '../cubit/betting_odds_state.dart';
+
+import '../../../../core/domain/entities/betting_odds.dart';
+import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/app_values.dart';
+import '../../../fixture/presentation/widgets/fixture_details.dart';
 
 class BettingOddsScreen extends StatelessWidget {
-  const BettingOddsScreen({Key? key}) : super(key: key);
+  final BettingOdds odds;
+
+  const  BettingOddsScreen({Key? key, required this.odds}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BettingOddsCubit, BettingOddsStates>(
-      listener: (context, state) {
-        if (state is BettingOddsLoadFailure &&
-            state.message ==
-                DataSource.networkConnectError.getFailure().message) {
-          buildBlockAlert(context: context, message: state.message);
-        }
-      },
-      builder: (context, state) {
-        BettingOddsCubit cubit = context.read<BettingOddsCubit>();
-        return state is BettingOddsLoading
-            ? centerIndicator()
-            : RefreshIndicator(
-                onRefresh: () async {
-                  await cubit.getOdds(date: '');
-                },
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: AppPadding.p20),
-                    child: ViewBettingOdds(odds: cubit.odds),
-                  ),
-                ),
-              );
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(AppStrings.odds),
+      ),
+      body: ListView(
+        physics: const BouncingScrollPhysics(),
+        children: [
+          // Assuming you have a FixtureDetails widget
+          // FixtureDetails(fixture: bettingOdds.fixture),
+          BettingOddsView(bettingOdds: odds),
+        ],
+      ),
+    );
+  }
+}
+
+class BettingOddsView extends StatelessWidget {
+  final BettingOdds bettingOdds;
+
+  const BettingOddsView({Key? key, required this.bettingOdds})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // This is just an example. Adjust according to your BettingOdds structure.
+    var homeTeamOdds = bettingOdds.odds
+        .firstWhere((o) => o.name == "Which team will score the 2nd goal?")
+        .values
+        .first
+        .odd;
+    var awayTeamOdds = bettingOdds.odds
+        .firstWhere((o) => o.name == "Which team will score the 2nd goal?")
+        .values
+        .last
+        .odd;
+
+    return Padding(
+      padding: const EdgeInsets.all(AppPadding.p16),
+      child: Column(
+        children: [
+          const Text(
+            AppStrings.homeOdds,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(homeTeamOdds),
+          const Text(
+            AppStrings.awayOdds,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(awayTeamOdds),
+        ],
+      ),
     );
   }
 }

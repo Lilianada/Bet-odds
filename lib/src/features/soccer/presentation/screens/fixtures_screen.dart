@@ -1,6 +1,6 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import '../widgets/no_fixtures_today.dart';
 import '../widgets/leagues_header.dart';
 import '../cubit/soccer_state.dart';

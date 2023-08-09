@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:live_score/src/features/odds/data/models/odds_model.dart';
 import '../models/standings_model.dart';
 import '../../domain/use_cases/standings_usecase.dart';
 import '../../../../core/api/dio_helper.dart';
@@ -16,6 +17,8 @@ abstract class SoccerDataSource {
   Future<List<SoccerFixtureModel>> getLiveFixtures();
 
   Future<StandingsModel> getStandings({required StandingsParams params});
+
+  Future<List<BettingOddsModel>> getOdds({required int leagueId});
 }
 
 class SoccerDataSourceImpl implements SoccerDataSource {
@@ -74,6 +77,22 @@ class SoccerDataSourceImpl implements SoccerDataSource {
       rethrow;
     }
   }
+
+  @override
+Future<List<BettingOddsModel>> getOdds({required int leagueId}) async {
+    try {
+      final response = await dioHelper
+          .get(url: Endpoints.odds, queryParams: {"leagueId": leagueId});
+      List<dynamic> result = response.data["response"];
+      List<BettingOddsModel> odds = List<BettingOddsModel>.from(result.map(
+        (oddsData) => BettingOddsModel.fromJson(oddsData),
+      ));
+      return odds;
+    } catch (error) {
+      rethrow;
+    }
+}
+
 }
 
 List<SoccerFixtureModel> _getResult(Response response) {

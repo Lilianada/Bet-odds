@@ -3,6 +3,7 @@ import '../../core/api/dio_helper.dart';
 import '../../core/network/network_info.dart';
 import 'data/datasources/soccer_data_source.dart';
 import 'data/repositories/soccer_repository_impl.dart';
+import 'domain/use_cases/betting_odds_useCase.dart';
 import 'domain/use_cases/day_fixtures_usecase.dart';
 import 'domain/use_cases/leagues_usecase.dart';
 import 'domain/use_cases/live_fixtures_usecase.dart';
@@ -46,6 +47,7 @@ void initSoccer() {
       leaguesUseCase: sl<LeaguesUseCase>(),
       liveFixturesUseCase: sl<LiveFixturesUseCase>(),
       standingUseCase: sl<StandingsUseCase>(),
+      bettingOddsUseCase: sl<BettingOddsUseCase>(),
     ),
   );
 }

@@ -7,5 +7,5 @@ class Endpoints {
   static const events = "events";
   static const standings = "standings";
   static const bookies = "bookies";
-  static const odds = "odds";
+  static const odds = "odds/live";
 }

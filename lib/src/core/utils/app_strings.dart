@@ -7,6 +7,7 @@ class AppStrings {
   static const String homeTeam = "Home Team";
   static const String awayTeam = "Away Team";
   static const String homeOdds = "Home Odds";
+  static const String awayOdds = "Away Odds";
   static const games = "Games";
   static const String fixtures = "Fixtures";
   static const String standings = "Standings";

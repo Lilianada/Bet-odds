@@ -1,3 +1,5 @@
+import '../../features/odds/data/models/odds_model.dart';
+import '../domain/entities/betting_odds.dart';
 import '../domain/entities/fixture.dart';
 import '../domain/entities/fixture_league.dart';
 import '../domain/entities/goals.dart';
@@ -14,12 +16,15 @@ class SoccerFixtureModel extends SoccerFixture {
       {required Fixture fixture,
       required FixtureLeague fixtureLeague,
       required Teams teams,
-      required Goals goals})
+      required Goals goals,
+      required BettingOdds odds,
+      })
       : super(
           fixture: fixture,
           fixtureLeague: fixtureLeague,
           teams: teams,
           goals: goals,
+          odds: odds,
         );
 
   factory SoccerFixtureModel.fromJson(Map<String, dynamic> json) =>
@@ -28,5 +33,6 @@ class SoccerFixtureModel extends SoccerFixture {
         fixtureLeague: FixtureLeagueModel.fromJson(json['league']).toDomain(),
         teams: TeamsModel.fromJson(json['teams']).toDomain(),
         goals: GoalsModel.fromJson(json['goals']).toDomain(),
+        odds: BettingOddsModel.fromJson(json['odds']).toDomain(),
       );
 }

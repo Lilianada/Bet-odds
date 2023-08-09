@@ -1,3 +1,5 @@
+import 'package:live_score/src/features/odds/data/models/odds_model.dart';
+
 import '../../models/fixture_league.dart';
 import '../../models/fixture_model.dart';
 import '../../models/goals_model.dart';
@@ -5,6 +7,7 @@ import '../../models/league_model.dart';
 import '../../models/soccer_fixture_model.dart';
 import '../../models/status_model.dart';
 import '../../models/teams_model.dart';
+import '../entities/betting_odds.dart';
 import '../entities/fixture.dart';
 import '../entities/fixture_league.dart';
 import '../entities/goals.dart';
@@ -34,10 +37,23 @@ extension FixtureLeagueExtension on FixtureLeagueModel {
       id: id, name: name, logo: logo, season: season, round: round);
 }
 
+extension OddsExtension on BettingOddsModel {
+  BettingOdds toDomain() => BettingOdds(
+        homeOdds: homeOdds,
+        drawOdds: drawOdds,
+        homeTeamOdds: homeTeamOdds,
+        awayTeamOdds: awayTeamOdds,
+        homeTeam: homeTeam,
+        awayTeam: awayTeam, 
+      );
+}
+
 extension FixtureExtension on FixtureModel {
   Fixture toDomain() =>
       Fixture(id: id, date: date, referee: referee, status: status);
 }
+
+
 
 extension SoccerFixtureExtension on SoccerFixtureModel {
   SoccerFixture toDomain() => SoccerFixture(
@@ -45,6 +61,7 @@ extension SoccerFixtureExtension on SoccerFixtureModel {
         fixtureLeague: fixtureLeague,
         teams: teams,
         goals: goals,
+        odds: odds,
       );
 }
 

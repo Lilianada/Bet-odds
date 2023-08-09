@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/domain/entities/league.dart';
+import '../../../../core/domain/entities/betting_odds.dart';
 import '../../../../core/domain/entities/soccer_fixture.dart';
 import '../../../../core/error/error_handler.dart';
 import '../entities/standings.dart';
@@ -17,4 +17,6 @@ abstract class SoccerRepository {
 
   Future<Either<Failure, Standings>> getStandings(
       {required StandingsParams params});
+
+  Future<Either<Failure, BettingOdds>> getOdds({required int leagueId});
 }

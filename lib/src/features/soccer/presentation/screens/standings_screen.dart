@@ -19,6 +19,7 @@ class StandingsScreen extends StatefulWidget {
 
 class _StandingsScreenState extends State<StandingsScreen> {
   Standings? standings;
+  List<TeamRank>? _filteredStandings;
   TextEditingController _searchController = TextEditingController();
 
   @override
@@ -28,12 +29,31 @@ class _StandingsScreenState extends State<StandingsScreen> {
     cubit.resetFilters();
   }
 
+  _filterStandings(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        _filteredStandings = null;
+      });
+      return;
+    }
+
+    final List<TeamRank> filtered = standings!.standings
+        .expand((group) => group)
+        .where((teamRank) =>
+            teamRank.team.name.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    setState(() {
+      _filteredStandings = filtered;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SoccerCubit, SoccerStates>(
       listener: (context, state) {
         if (state is SoccerStandingsLoaded) standings = state.standings;
-        print("Received Standings: ${standings.toString()}"); 
+        print("Received Standings: ${standings.toString()}");
       },
       builder: (context, state) {
         SoccerCubit cubit = context.read<SoccerCubit>();
@@ -52,19 +72,25 @@ class _StandingsScreenState extends State<StandingsScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onChanged: (value) {
-                  // Implement the search logic here
-                },
+                onChanged: _filterStandings,
               ),
             ),
             const SizedBox(height: AppSize.s5),
-            
             LeaguesView(leagues: cubit.filteredLeagues, getFixtures: false),
-            
             if (state is SoccerStandingsLoading)
               const Center(
                   child: LinearProgressIndicator(color: AppColors.deepOrange)),
-            if (standings != null)
+            if (_filteredStandings != null)
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                  children: _filteredStandings!
+                      .map((teamRank) => StandingsItem(teamRank: teamRank))
+                      .toList(),
+                ),
+              ),
+            if (standings != null && _filteredStandings == null)
               ...List.generate(
                 standings!.standings.length,
                 (index) => SingleChildScrollView(
@@ -76,9 +102,13 @@ class _StandingsScreenState extends State<StandingsScreen> {
                       // Example of displaying league details
                       Row(
                         children: [
-                          Image.network(standings!.standings[index][0].team.logo, width: 40, height: 40), // Assuming each team has a logo
+                          Image.network(
+                              standings!.standings[index][0].team.logo,
+                              width: 40,
+                              height: 40), // Assuming each team has a logo
                           const SizedBox(width: 10),
-                          Text(standings!.standings[index][0].team.name), // Assuming each team has a name
+                          Text(standings!.standings[index][0].team
+                              .name), // Assuming each team has a name
                         ],
                       ),
                       const SizedBox(height: AppSize.s10),

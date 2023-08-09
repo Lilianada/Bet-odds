@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:live_score/src/features/odds/presentation/screens/betting_odds_screen.dart';
+import 'package:live_score/src/core/domain/entities/betting_odds.dart';
+import 'package:live_score/src/features/soccer/domain/use_cases/betting_odds_useCase.dart';
+import 'package:live_score/src/features/soccer/presentation/screens/bettings_odds_screen.dart';
 
-import '../../../../core/domain/entities/league.dart';
 import '../../../../core/domain/entities/soccer_fixture.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../../../../core/utils/app_constants.dart';
@@ -22,19 +23,21 @@ class SoccerCubit extends Cubit<SoccerStates> {
   final LeaguesUseCase leaguesUseCase;
   final LiveFixturesUseCase liveFixturesUseCase;
   final StandingsUseCase standingUseCase;
+  final BettingOddsUseCase bettingOddsUseCase;
 
   SoccerCubit({
     required this.dayFixturesUseCase,
     required this.leaguesUseCase,
     required this.liveFixturesUseCase,
     required this.standingUseCase,
+    required this.bettingOddsUseCase,
   }) : super(ScoreInitial());
 
   List screens = [
     const SoccerScreen(),
     const FixturesScreen(),
     const StandingsScreen(),
-    const BettingOddsScreen(),
+     const BettingOddsScreen(),
   ];
 
   List<String> titles = [
@@ -55,38 +58,23 @@ class SoccerCubit extends Cubit<SoccerStates> {
 
   Future<List<League>> getLeagues() async {
     emit(SoccerLeaguesLoading());
-    
-    try {
-        final leaguesResult = await leaguesUseCase(NoParams());
-        
-        // Print the result from the leaguesUseCase
-        print("Received leagues result: $leaguesResult");
-        
-        // Assuming leaguesResult is either a Left or Right type, e.g., from Dartz package
-        if (leaguesResult.isRight()) {
-            final leagues = leaguesResult.getOrElse(() => []);
-            
-            // Print the processed leagues
-            print("Processed leagues: $leagues");
-            
-            for (League league in leagues) {
-                filteredLeagues.add(league);
-                AppConstants.leaguesFixtures
-                    .putIfAbsent(league.id, () => LeagueOfFixture(league: league));
-            }
-            emit(SoccerLeaguesLoaded(filteredLeagues));
-        } else {
-            emit(SoccerLeaguesLoadFailure(leaguesResult.fold((l) => l.message, (r) => '')));
+    filteredLeagues = [];
+    final leagues = await leaguesUseCase(NoParams());
+    leagues.fold(
+      (left) => emit(SoccerLeaguesLoadFailure(left.message)),
+      (right) {
+        for (League league in right) {
+          if (AppConstants.availableLeagues.contains(league.id)) {
+            filteredLeagues.add(league);
+            AppConstants.leaguesFixtures
+                .putIfAbsent(league.id, () => LeagueOfFixture(league: league));
+          }
         }
-    } catch (error) {
-        // Print any errors
-        print("Error in getLeagues: $error");
-        emit(SoccerLeaguesLoadFailure(error.toString()));
-    }
-    
+        emit(SoccerLeaguesLoaded(filteredLeagues));
+      },
+    );
     return filteredLeagues;
-}
-
+  }
 
   List<SoccerFixture> dayFixtures = [];
 
@@ -158,7 +146,7 @@ class SoccerCubit extends Cubit<SoccerStates> {
     leagues.fold(
       (left) => emit(SoccerLeaguesLoadFailure(left.message)),
       (right) {
-        for (League league in right) {
+        for (League league in right) {  //
           if (AppConstants.availableLeagues.contains(league.id)) {
             filteredLeagues.add(league);
             AppConstants.leaguesFixtures
@@ -166,6 +154,25 @@ class SoccerCubit extends Cubit<SoccerStates> {
           }
         }
         emit(SoccerLeaguesLoaded(filteredLeagues));
+      },
+    );
+  }
+
+  Future<void> getOdds(int leagueId) async {
+    emit(SoccerOddsLoading());
+    final oddsResult =
+        await bettingOddsUseCase(leagueId); // Removed casting to String
+
+    oddsResult.fold(
+      (left) => emit(SoccerOddsLoadFailure(left.message)),
+      (right) {
+        // Assuming `right` is of type `BettingOdds`
+        AppConstants.leaguesFixtures[leagueId]?.odds = right;
+
+        // Create a map for the loaded odds
+        final loadedOdds = {leagueId: right};
+
+        emit(SoccerOddsLoaded(loadedOdds));
       },
     );
   }

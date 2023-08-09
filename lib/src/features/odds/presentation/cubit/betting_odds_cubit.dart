@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:live_score/src/core/utils/app_strings.dart';
-import 'package:live_score/src/features/odds/presentation/screens/betting_odds_screen.dart';
 
 import '../../../../core/domain/entities/betting_odds.dart';
+import '../../../soccer/presentation/screens/bettings_odds_screen.dart';
 import '../../domain/repositories/betting_odds_repository.dart';
 import '../../domain/use_cases/get_betting_odds.dart';
 import 'betting_odds_state.dart';
@@ -16,9 +16,9 @@ class BettingOddsCubit extends Cubit<BettingOddsStates> {
     required this.bettingOddsRepository,
   }) : super(BettingOddsInitial());
 
-  List screens = [
-    const BettingOddsScreen(),
-  ];
+  // List screens = [
+  //    BettingOddsScreen(odds: odds,),
+  // ];
 
   List<String> titles = [
     AppStrings.odds,

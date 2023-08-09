@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/domain/entities/league.dart';
+import '../../../../core/domain/entities/league.dart' show League;
 import '../../../../core/error/error_handler.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../repositories/soccer_repository.dart';

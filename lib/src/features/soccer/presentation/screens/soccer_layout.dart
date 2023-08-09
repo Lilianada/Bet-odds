@@ -44,14 +44,14 @@ class SoccerLayout extends StatelessWidget {
                 icon: Icon(Icons.insert_chart),
                 label: AppStrings.odds,
               ),
-              BottomNavigationBarItem( // Added Lives item
-                icon: Icon(Icons.live_tv),
-                label: AppStrings.live,
-              ),
-              BottomNavigationBarItem( // Added Bookies item
-                icon: Icon(Icons.book_online),
-                label: AppStrings.bookies,
-              ),
+              // BottomNavigationBarItem( // Added Lives item
+              //   icon: Icon(Icons.live_tv),
+              //   label: AppStrings.live,
+              // ),
+              // BottomNavigationBarItem( // Added Bookies item
+              //   icon: Icon(Icons.book_online),
+              //   label: AppStrings.bookies,
+              // ),
             ],
             unselectedItemColor: Colors.grey, // Inactive color
             selectedItemColor: Colors.blue,   // Active color

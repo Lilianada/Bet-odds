@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:live_score/src/features/odds/presentation/cubit/betting_odds_cubit.dart';
-import 'package:live_score/src/features/odds/presentation/screens/betting_odds_screen.dart';
+import 'package:live_score/src/features/soccer/presentation/screens/bettings_odds_screen.dart';
+// import 'package:live_score/src/features/odds/presentation/screens/betting_odds_screen.dart';
 
 import '../container_injector.dart';
 import '../core/domain/entities/soccer_fixture.dart';
@@ -37,13 +38,13 @@ class AppRouter {
             child: const SoccerLayout(),
           ),
         );
-        case Routes.odds:
-          return MaterialPageRoute(
-            builder: (context) => BlocProvider(
-              create: (context) => sl<BettingOddsCubit>(),
+      case Routes.odds:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => sl<BettingOddsCubit>(),
             child: const BettingOddsScreen(),
-            ),
-          );
+          ),
+        );
       case Routes.soccer:
         return MaterialPageRoute(
           builder: (context) => BlocProvider.value(
@@ -58,14 +59,6 @@ class AppRouter {
             child: const FixturesScreen(),
           ),
         );
-        
-      // case Routes.bookies:
-      //   return MaterialPageRoute(
-      //     builder: (context) => BlocProvider.value(
-      //       value: sl<SoccerCubit>(),
-      //       child: const BookiesScreen(),
-      //     ),
-      //   );
       case Routes.fixture:
         return MaterialPageRoute(
           builder: (context) {
