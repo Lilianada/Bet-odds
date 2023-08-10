@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:live_score/src/core/usecase/usecase.dart';
-import 'package:live_score/src/features/auth/domain/use_cases/google_sign_in_use_case.dart';
-import 'package:live_score/src/features/auth/domain/use_cases/login_use_case.dart';
-import 'package:live_score/src/features/auth/domain/use_cases/sign_out_use_case.dart';
-import 'package:live_score/src/features/auth/domain/use_cases/sign_up_use_case.dart';
-import 'package:live_score/src/features/auth/presentation/cubit/auth_state.dart';
+import 'package:odd_sprat/src/core/usecase/usecase.dart';
+import 'package:odd_sprat/src/features/auth/domain/use_cases/google_sign_in_use_case.dart';
+import 'package:odd_sprat/src/features/auth/domain/use_cases/login_use_case.dart';
+import 'package:odd_sprat/src/features/auth/domain/use_cases/sign_out_use_case.dart';
+import 'package:odd_sprat/src/features/auth/domain/use_cases/sign_up_use_case.dart';
+import 'package:odd_sprat/src/features/auth/presentation/cubit/auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final GoogleSignInUseCase googleSignInUseCase;
@@ -40,7 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> login({required String email, required String password}) async {
     emit(AuthLoading());
-    final params = LoginParams(email: email, password: password);
+    final params = LoginParams(email: email, password: password, name: '');
     final result = await loginUseCase(params);
     result.fold((left) => emit(AuthLoadFailed(left.message)),
         (right) => emit(AuthLoadSuccess()));

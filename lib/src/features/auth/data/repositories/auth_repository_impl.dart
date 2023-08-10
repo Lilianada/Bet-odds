@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:live_score/src/core/error/error_handler.dart';
-import 'package:live_score/src/core/error/firebase_error_handler.dart';
-import 'package:live_score/src/core/error/response_status.dart';
-import 'package:live_score/src/core/network/network_info.dart';
-import 'package:live_score/src/features/auth/data/datasources/auth_datasource.dart';
-import 'package:live_score/src/features/auth/domain/entities/user.dart';
-import 'package:live_score/src/features/auth/domain/mappers/mappers.dart';
-import 'package:live_score/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:odd_sprat/src/core/error/error_handler.dart';
+import 'package:odd_sprat/src/core/error/firebase_error_handler.dart';
+import 'package:odd_sprat/src/core/error/response_status.dart';
+import 'package:odd_sprat/src/core/network/network_info.dart';
+import 'package:odd_sprat/src/features/auth/data/datasources/auth_datasource.dart';
+import 'package:odd_sprat/src/features/auth/domain/entities/user.dart';
+import 'package:odd_sprat/src/features/auth/domain/mappers/mappers.dart';
+import 'package:odd_sprat/src/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthDatasource datasource;

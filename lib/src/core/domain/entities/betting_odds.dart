@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:live_score/src/features/odds/data/models/odds_model.dart';
+import 'package:odd_sprat/src/features/odds/data/models/odds_model.dart';
 
 class BettingOdds extends Equatable {
   final BOFixture fixture;

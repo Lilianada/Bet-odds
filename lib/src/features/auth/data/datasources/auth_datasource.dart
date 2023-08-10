@@ -1,11 +1,34 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:live_score/src/core/error/firebase_error_handler.dart';
-import 'package:live_score/src/features/auth/data/models/user_model.dart';
+import 'package:odd_sprat/src/core/error/firebase_error_handler.dart';
+import 'package:odd_sprat/src/features/auth/data/models/user_model.dart';
 
 abstract class AuthDatasource {
-  Future<UserModel> signUpWithEmail(
-      {required String email, required String password, required String name});
+  final FirebaseAuth authInstance = FirebaseAuth.instance;
+
+  Future<UserModel> signUpWithEmail({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
+    try {
+      UserCredential userCredential =
+          await authInstance.createUserWithEmailAndPassword(
+        email: email.trim(),
+        password: password.trim(),
+      );
+      await userCredential.user?.updateDisplayName(name);
+      return UserModel(
+        id: userCredential.user!.uid,
+        email: email,
+        username: name,
+      );
+    } on FirebaseAuthException catch (e) {
+      // Handle Firebase-specific signup errors here if needed
+      throw Exception(e.message);
+    }
+  }
+
   Future<UserModel> logInWithEmail(
       {required String email, required String password});
   Future<UserModel> signInWithGoogle();
@@ -13,7 +36,9 @@ abstract class AuthDatasource {
 }
 
 class FirebaseAuthDatasource implements AuthDatasource {
-  final authInstance = FirebaseAuth.instance;
+  @override
+  final FirebaseAuth authInstance = FirebaseAuth.instance;
+
   @override
   Future<UserModel> logInWithEmail(
       {required String email, required String password}) async {
@@ -24,7 +49,7 @@ class FirebaseAuthDatasource implements AuthDatasource {
       userModel = UserModel(
           id: userCred.user!.uid,
           email: email,
-          name: userCred.user!.displayName ?? '');
+          username: userCred.user!.displayName ?? '');
     } on FirebaseAuthException catch (e) {
       parseFirebaseException(e.code);
     } catch (e) {
@@ -47,7 +72,7 @@ class FirebaseAuthDatasource implements AuthDatasource {
       userModel = UserModel(
           id: userCred.user!.uid,
           email: googleUser!.email,
-          name: googleUser.displayName ?? '');
+          username: googleUser.displayName ?? '');
     } on FirebaseAuthException catch (e) {
       parseFirebaseException(e.code);
     } catch (e) {
@@ -71,7 +96,7 @@ class FirebaseAuthDatasource implements AuthDatasource {
       userModel = UserModel(
           id: userCred.user!.uid,
           email: email,
-          name: userCred.user!.displayName ?? name);
+          username: userCred.user!.displayName ?? name);
     } on FirebaseAuthException catch (e) {
       parseFirebaseException(e.code);
     } catch (e) {

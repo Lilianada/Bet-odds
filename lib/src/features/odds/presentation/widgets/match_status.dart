@@ -9,7 +9,7 @@ class MatchStatus extends StatelessWidget {
   final String homeTeam;
   final String awayTeam;
 
-  MatchStatus(this.status, this.date, this.homeTeam, this.awayTeam);
+  const MatchStatus(this.status, this.date, this.homeTeam, this.awayTeam, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,22 +22,22 @@ class MatchStatus extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${status.long}",
-                style: TextStyle(
+                status.long,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 DateFormat.yMMMd().format(DateTime.now()),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
                 ),
               ),
             ],
           ),
           Text(
-            "${homeTeam} ${status.score} - ${awayTeam}",
-            style: TextStyle(
+            "$homeTeam ${status.score} - $awayTeam",
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),

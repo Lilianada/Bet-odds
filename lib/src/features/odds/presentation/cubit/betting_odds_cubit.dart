@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:live_score/src/core/utils/app_strings.dart';
+import 'package:odd_sprat/src/core/utils/app_strings.dart';
 
 import '../../../../core/domain/entities/betting_odds.dart';
 import '../../domain/use_cases/get_betting_odds.dart';

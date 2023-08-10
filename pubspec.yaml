@@ -1,12 +1,12 @@
-name: live_score
-description: Live score app
+name: odd_sprat
+description: OddSprat app
 
 publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.16.1 <3.0.0"
+  sdk: ">=2.17.1 <3.0.0"
 
 dependencies:
   bloc: ^8.1.0
@@ -26,6 +26,8 @@ dependencies:
   internet_connection_checker: ^0.0.1+4
   intl: ^0.17.0
   shared_preferences: ^2.0.15
+  firebase_storage: ^11.2.5
+  email_validator: ^2.1.17
 
 dev_dependencies:
   flutter_lints: ^2.0.1
@@ -36,7 +38,11 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/Oddsprat_Logo.png
     - assets/images/no_matches.png
     - assets/images/no_stats.png
     - assets/images/Football_playground.png
     - assets/images/substitute.jpg
+    - assets/images/@wanleee.jpeg
+    - assets/images/New Balance 2002.jpeg
+    - assets/images/new balance 2002r protection pack rain cloud.jpeg

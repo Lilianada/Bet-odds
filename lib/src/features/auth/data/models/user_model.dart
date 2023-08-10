@@ -1,26 +1,27 @@
 import 'dart:convert';
 
-import 'package:live_score/src/features/auth/domain/entities/user.dart';
+import 'package:odd_sprat/src/features/auth/domain/entities/user.dart';
 
 class UserModel extends User {
   final String id;
   final String email;
-  final String name;
+  final String username;
+  
   const UserModel({
     required this.id,
     required this.email,
-    required this.name,
-  }) : super(id: id, email: email, name: name);
+    required this.username,
+  }) : super(id: id, email: email, username: username);
 
   UserModel copyWith({
     String? id,
     String? email,
-    String? name,
+    String? username,
   }) {
     return UserModel(
       id: id ?? this.id,
       email: email ?? this.email,
-      name: name ?? this.name,
+      username: username ?? this.username,
     );
   }
 
@@ -28,7 +29,7 @@ class UserModel extends User {
     return {
       'id': id,
       'email': email,
-      'name': name,
+      'username': username,
     };
   }
 
@@ -36,7 +37,7 @@ class UserModel extends User {
     return UserModel(
       id: map['id'] ?? '',
       email: map['email'] ?? '',
-      name: map['name'] ?? '',
+      username: map['username'] ?? '',
     );
   }
 
@@ -46,7 +47,7 @@ class UserModel extends User {
       UserModel.fromMap(json.decode(source));
 
   @override
-  String toString() => 'UserModel(id: $id, email: $email, name: $name)';
+  String toString() => 'UserModel(id: $id, email: $email, username: $username)';
 
   @override
   bool operator ==(Object other) {
@@ -55,9 +56,9 @@ class UserModel extends User {
     return other is UserModel &&
         other.id == id &&
         other.email == email &&
-        other.name == name;
+        other.username == username;
   }
 
   @override
-  int get hashCode => id.hashCode ^ email.hashCode ^ name.hashCode;
+  int get hashCode => id.hashCode ^ email.hashCode ^ username.hashCode;
 }
