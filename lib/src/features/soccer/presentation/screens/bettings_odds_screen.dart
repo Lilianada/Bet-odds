@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:odd_sprat/src/config/app_constants.dart';
 import 'package:odd_sprat/src/core/domain/entities/betting_odds.dart';
 
 import '../../../odds/data/models/odds_model.dart';
@@ -18,10 +19,21 @@ class BettingOddsScreen extends StatefulWidget {
 
 class _BettingOddsScreenState extends State<BettingOddsScreen> {
   BettingOddsModel? odds;
+  String? selectedOddsType;
+
+// List of odds types
+  final List<String> oddsTypes = [
+    'season',
+    'bet',
+    'fixture',
+    'league',
+    'bookmaker',
+  ];
 
   @override
   void initState() {
     super.initState();
+    selectedOddsType = oddsTypes.first;
     fetchOdds();
   }
 
@@ -48,8 +60,8 @@ class _BettingOddsScreenState extends State<BettingOddsScreen> {
   Widget build(BuildContext context) {
     // Dummy data for Match Details
     final matchDate = DateTime.now();
-    final matchTime = "3:00 PM";
-    final venue = "Stadium A";
+    const matchTime = "3:00 PM";
+    const venue = "Stadium A";
 
     // Dummy news data
     List<NewsItem> dummyNews = [
@@ -152,15 +164,15 @@ class _BettingOddsScreenState extends State<BettingOddsScreen> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        Text(
+                        const Text(
                           matchTime,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        Text(
+                        const Text(
                           venue,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -170,8 +182,54 @@ class _BettingOddsScreenState extends State<BettingOddsScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            // Odds Dropdown
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 5.0),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: selectedOddsType,
+                            icon: const Icon(
+                                Icons.arrow_drop_down), 
+                            isExpanded: true,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedOddsType = newValue;
+                              });
+                            },
+                            items: oddsTypes
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value,
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        color: AppColors.background)),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
+
             // Flash Score News
+            const SizedBox(height: 20),
             Column(
               crossAxisAlignment: CrossAxisAlignment
                   .start, // This aligns child widgets to the start (left for LTR languages)
@@ -179,10 +237,10 @@ class _BettingOddsScreenState extends State<BettingOddsScreen> {
                 // Header for Flash Score News
                 const Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                      EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
                   child: Text(
                     "Flash Score News",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
 
