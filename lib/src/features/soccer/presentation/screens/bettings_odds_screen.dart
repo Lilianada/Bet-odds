@@ -5,10 +5,7 @@ import 'package:odd_sprat/src/config/app_constants.dart';
 import 'package:odd_sprat/src/core/domain/entities/betting_odds.dart';
 
 import '../../../odds/data/models/odds_model.dart';
-import '../../../odds/presentation/widgets/match_status.dart';
-import '../../../odds/presentation/widgets/soccer_match_status.dart';
 import '../cubit/soccer_cubit.dart';
-import '../widgets/news_card.dart';
 
 class BettingOddsScreen extends StatefulWidget {
   const BettingOddsScreen({Key? key}) : super(key: key);
@@ -81,6 +78,12 @@ class _BettingOddsScreenState extends State<BettingOddsScreen> {
     ];
 
     return Scaffold(
+       appBar: AppBar(
+        leading: Image.asset("assets/images/Oddsprat_Logo.png", fit: BoxFit.contain),
+        title: const Text("Odds", style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
