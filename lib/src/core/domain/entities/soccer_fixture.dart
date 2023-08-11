@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:live_score/src/core/domain/entities/fixture.dart';
-import 'package:live_score/src/core/domain/entities/teams.dart';
+import 'package:odd_sprat/src/core/domain/entities/fixture.dart';
+import 'package:odd_sprat/src/core/domain/entities/teams.dart';
 import 'betting_odds.dart';
 import 'fixture_league.dart';
 import 'goals.dart';

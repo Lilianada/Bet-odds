@@ -1,24 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:live_score/src/core/utils/app_strings.dart';
+import 'package:odd_sprat/src/core/utils/app_strings.dart';
 
 import '../../../../core/domain/entities/betting_odds.dart';
-import '../../../soccer/presentation/screens/bettings_odds_screen.dart';
-import '../../domain/repositories/betting_odds_repository.dart';
 import '../../domain/use_cases/get_betting_odds.dart';
 import 'betting_odds_state.dart';
 
 class BettingOddsCubit extends Cubit<BettingOddsStates> {
-  final GetBettingOdds getBettingOdds;
-  final BettingOddsRepository bettingOddsRepository;
+  final GetBettingOddsUseCase getBettingOddsUseCase;
 
-  BettingOddsCubit( {
-    required this.getBettingOdds,
-    required this.bettingOddsRepository,
-  }) : super(BettingOddsInitial());
-
-  // List screens = [
-  //    BettingOddsScreen(odds: odds,),
-  // ];
+  BettingOddsCubit({required this.getBettingOddsUseCase})
+      : super(BettingOddsInitial());
 
   List<String> titles = [
     AppStrings.odds,
@@ -28,9 +19,12 @@ class BettingOddsCubit extends Cubit<BettingOddsStates> {
 
   Future<void> getOdds({required String date}) async {
     emit(BettingOddsLoading());
-    final result = await getBettingOdds(date);
+    final result = await getBettingOddsUseCase(date);
+
     result.fold(
-      (left) => emit(BettingOddsLoadFailure(left.message)),
+      (left) {
+        emit(BettingOddsLoadFailure(left.message));
+      },
       (right) {
         odds = right;
         emit(BettingOddsLoaded(odds));

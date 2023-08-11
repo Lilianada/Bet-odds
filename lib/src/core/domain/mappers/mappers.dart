@@ -1,4 +1,4 @@
-import 'package:live_score/src/features/odds/data/models/odds_model.dart';
+import 'package:odd_sprat/src/features/odds/data/models/odds_model.dart';
 
 import '../../models/fixture_league.dart';
 import '../../models/fixture_model.dart';
@@ -39,9 +39,7 @@ extension FixtureLeagueExtension on FixtureLeagueModel {
 
 extension OddsExtension on BettingOddsModel {
   BettingOdds toDomain() => BettingOdds(
-        date: date,
-        oddsList: oddsList,
-        match: match,
+        update: update,
         fixture: fixture,
         league: league,
         teams: teams,

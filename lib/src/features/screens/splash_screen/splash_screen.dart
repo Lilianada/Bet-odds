@@ -1,11 +1,11 @@
 // splash_screen.dart
 import 'package:flutter/material.dart';
 
-import '../../../config/app_constants.dart';
-import '../auth_screens/login_screen.dart';
 import '../onboarding_screen/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }

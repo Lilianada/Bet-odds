@@ -13,13 +13,14 @@ void initOdds() {
   sl.registerLazySingleton<BettingOddsRepositoryImpl>(
     () => BettingOddsRepositoryImpl(
       networkInfo: sl<NetworkInfoImpl>(),
-      bettingOddsDataSource: sl<BettingOddsDataSourceImpl>(), bettingOddsRemoteDataSource: null,
+      bettingOddsDataSource: sl<BettingOddsDataSourceImpl>(),
     ),
   );
+  sl.registerLazySingleton<GetBettingOddsUseCase>(() => GetBettingOddsUseCase(
+      bettingOddsRepository: sl<BettingOddsRepositoryImpl>()));
   sl.registerFactory<BettingOddsCubit>(
     () => BettingOddsCubit(
-      bettingOddsRepository: sl<BettingOddsRepositoryImpl>(),
-      getBettingOdds: sl<GetBettingOdds>(),
+      getBettingOddsUseCase: sl<GetBettingOddsUseCase>(),
     ),
   );
 }

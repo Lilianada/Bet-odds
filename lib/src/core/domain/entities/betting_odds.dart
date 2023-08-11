@@ -1,21 +1,18 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:odd_sprat/src/features/odds/data/models/odds_model.dart';
 
 class BettingOdds extends Equatable {
   final BOFixture fixture;
   final BOLeague league;
   final BOTeams teams;
-  final BOStatus status;
-  final List<BOBetOption> odds;
-  final String date;
-  final List<BettingOdds> oddsList;
-  final String match;
+  final BetStatus status;
+  final List<BetOption> odds;
+  final DateTime update;
 
   const BettingOdds({
-    required this.date,
-    required this.oddsList,
-    required this.match,
+    required this.update,
     required this.fixture,
     required this.league,
     required this.teams,
@@ -24,14 +21,14 @@ class BettingOdds extends Equatable {
   });
 
   @override
-  List<Object?> get props => [fixture, league, teams, status, odds];
+  List<Object?> get props => [fixture, league, teams, odds];
 }
 
 class BOFixture extends Equatable {
-  final int id;
-  final BOStatus status;
+  final int? id;
+  final FixureStatus? status;
 
-  const BOFixture({required this.id, required this.status});
+  const BOFixture({this.id, this.status});
 
   @override
   List<Object?> get props => [id, status];
@@ -39,14 +36,14 @@ class BOFixture extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'status': status.toMap(),
+      'status': status?.toMap(),
     };
   }
 
   factory BOFixture.fromMap(Map<String, dynamic> map) {
     return BOFixture(
       id: map['id']?.toInt() ?? 0,
-      status: BOStatus.fromMap(map['status']),
+      status: FixureStatus.fromMap(map['status']),
     );
   }
 
@@ -57,10 +54,10 @@ class BOFixture extends Equatable {
 }
 
 class BOLeague extends Equatable {
-  final int id;
-  final int season;
+  final int? id;
+  final int? season;
 
-  const BOLeague({required this.id, required this.season});
+  const BOLeague({this.id, this.season});
 
   @override
   List<Object?> get props => [id, season];
@@ -115,10 +112,10 @@ class BOTeams extends Equatable {
 }
 
 class BOTeam extends Equatable {
-  final int id;
-  final int goals;
+  final int? id;
+  final int? goals;
 
-  const BOTeam({required this.id, required this.goals});
+  const BOTeam({this.id, this.goals});
 
   @override
   List<Object?> get props => [id, goals];
@@ -142,12 +139,12 @@ class BOTeam extends Equatable {
   factory BOTeam.fromJson(String source) => BOTeam.fromMap(json.decode(source));
 }
 
-class BOStatus extends Equatable {
+class FixureStatus extends Equatable {
   final String long;
   final int elapsed;
   final String seconds;
 
-  const BOStatus(
+  const FixureStatus(
       {required this.long, required this.elapsed, required this.seconds});
 
   @override
@@ -161,8 +158,8 @@ class BOStatus extends Equatable {
     };
   }
 
-  factory BOStatus.fromMap(Map<String, dynamic> map) {
-    return BOStatus(
+  factory FixureStatus.fromMap(Map<String, dynamic> map) {
+    return FixureStatus(
       long: map['long'] ?? '',
       elapsed: map['elapsed']?.toInt() ?? 0,
       seconds: map['seconds'] ?? '',
@@ -171,17 +168,16 @@ class BOStatus extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory BOStatus.fromJson(String source) =>
-      BOStatus.fromMap(json.decode(source));
+  factory FixureStatus.fromJson(String source) =>
+      FixureStatus.fromMap(json.decode(source));
 }
 
-class BOBetOption extends Equatable {
-  final int id;
-  final String name;
+class BetOption extends Equatable {
+  final int? id;
+  final String? name;
   final List<BetValue> values;
 
-  const BOBetOption(
-      {required this.id, required this.name, required this.values});
+  const BetOption({this.id, this.name, required this.values});
 
   @override
   List<Object?> get props => [id, name, values];
@@ -194,8 +190,8 @@ class BOBetOption extends Equatable {
     };
   }
 
-  factory BOBetOption.fromMap(Map<String, dynamic> map) {
-    return BOBetOption(
+  factory BetOption.fromMap(Map<String, dynamic> map) {
+    return BetOption(
       id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
       values:
@@ -205,23 +201,23 @@ class BOBetOption extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory BOBetOption.fromJson(String source) =>
-      BOBetOption.fromMap(json.decode(source));
+  factory BetOption.fromJson(String source) =>
+      BetOption.fromMap(json.decode(source));
 }
 
 class BetValue extends Equatable {
-  final String value;
-  final String odd;
+  final String? value;
+  final String? odd;
   final String? handicap;
-  final String? main;
-  final bool suspended;
+  final bool? main;
+  final bool? suspended;
 
   const BetValue({
-    required this.value,
-    required this.odd,
+    this.value,
+    this.odd,
     this.handicap,
     this.main,
-    required this.suspended,
+    this.suspended,
   });
 
   @override

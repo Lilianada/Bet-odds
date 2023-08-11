@@ -17,8 +17,8 @@ class BettingOddsDataSourceImpl implements BettingOddsDataSource {
   @override
   Future<List<BettingOddsModel>> getOdds({required String date}) async {
     try {
-      final response = await dioHelper
-          .get(url: Endpoints.odds, queryParams: {"date": date});
+      final response = await dioHelper.get(url: Endpoints.odds);
+      print('odds response: $response');
       return _getResult(response);
     } catch (error) {
       rethrow;

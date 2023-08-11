@@ -62,7 +62,6 @@ class SoccerCubit extends Cubit<SoccerStates> {
       (left) => emit(SoccerLeaguesLoadFailure(left.message)),
       (right) {
         for (League league in right) {
-          print("shiisi");
           filteredLeagues.add(league);
           if (AppConstants.availableLeagues.contains(league.id)) {
             filteredLeagues.add(league);

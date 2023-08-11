@@ -1,19 +1,17 @@
-import 'package:live_score/src/core/domain/entities/betting_odds.dart';
+import 'dart:convert';
+
+import 'package:odd_sprat/src/core/domain/entities/betting_odds.dart';
 
 class BettingOddsModel {
-  final String date;
-  final List<BettingOdds> oddsList;
-  final String match;
+  final DateTime update;
   final BOFixture fixture;
   final BOLeague league;
   final BOTeams teams;
-  final BOStatus status;
-  final List<BOBetOption> odds;
+  final BetStatus status;
+  final List<BetOption> odds;
 
   BettingOddsModel({
-    required this.date,
-    required this.oddsList,
-    required this.match,
+    required this.update,
     required this.fixture,
     required this.league,
     required this.teams,
@@ -23,14 +21,14 @@ class BettingOddsModel {
 
   factory BettingOddsModel.fromJson(Map<String, dynamic> json) {
     return BettingOddsModel(
-      date: json['date'],
-      oddsList: [],
-      match: json['match'],
-      fixture: BOFixture.fromJson(json['fixture']),
-      league: BOLeague.fromJson(json['league']),
-      teams: BOTeams.fromJson(json['teams']),
-      status: BOStatus.fromJson(json['status']),
-      odds: (json['odds'] as List).map((e) => BOBetOption.fromJson(e)).toList(),
+      update: json['update'] != null
+          ? DateTime.parse(json['update'])
+          : DateTime.now(),
+      fixture: BOFixture.fromMap(json['fixture']),
+      league: BOLeague.fromMap(json['league']),
+      teams: BOTeams.fromMap(json['teams']),
+      status: BetStatus.fromMap(json['status']),
+      odds: (json['odds'] as List).map((e) => BetOption.fromMap(e)).toList(),
     );
   }
 }
@@ -120,15 +118,15 @@ class BOStatusModel {
   }
 }
 
-class BetOption {
+class BetOptionModel {
   final int id;
   final String name;
   final List<BetValue> values;
 
-  BetOption({required this.id, required this.name, required this.values});
+  BetOptionModel({required this.id, required this.name, required this.values});
 
-  factory BetOption.fromJson(Map<String, dynamic> json) {
-    return BetOption(
+  factory BetOptionModel.fromJson(Map<String, dynamic> json) {
+    return BetOptionModel(
       id: json['id'],
       name: json['name'],
       values:
@@ -160,4 +158,65 @@ class BetValue {
       suspended: json['suspended'],
     );
   }
+}
+
+class BetStatus {
+  final bool? stopped;
+  final bool? blocked;
+  final bool? finished;
+  BetStatus({
+    this.stopped,
+    this.blocked,
+    this.finished,
+  });
+
+  BetStatus copyWith({
+    bool? stopped,
+    bool? blocked,
+    bool? finished,
+  }) {
+    return BetStatus(
+      stopped: stopped ?? this.stopped,
+      blocked: blocked ?? this.blocked,
+      finished: finished ?? this.finished,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'stopped': stopped,
+      'blocked': blocked,
+      'finished': finished,
+    };
+  }
+
+  factory BetStatus.fromMap(Map<String, dynamic> map) {
+    return BetStatus(
+      stopped: map['stopped'] ?? false,
+      blocked: map['blocked'] ?? false,
+      finished: map['finished'] ?? false,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory BetStatus.fromJson(String source) =>
+      BetStatus.fromMap(json.decode(source));
+
+  @override
+  String toString() =>
+      'BetStatus(stopped: $stopped, blocked: $blocked, finished: $finished)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is BetStatus &&
+        other.stopped == stopped &&
+        other.blocked == blocked &&
+        other.finished == finished;
+  }
+
+  @override
+  int get hashCode => stopped.hashCode ^ blocked.hashCode ^ finished.hashCode;
 }
