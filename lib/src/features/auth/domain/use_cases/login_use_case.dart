@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 
-import 'package:live_score/src/core/error/error_handler.dart';
-import 'package:live_score/src/core/usecase/usecase.dart';
-import 'package:live_score/src/features/auth/domain/entities/user.dart';
-import 'package:live_score/src/features/auth/domain/repositories/auth_repository.dart';
+import 'package:odd_sprat/src/core/error/error_handler.dart';
+import 'package:odd_sprat/src/core/usecase/usecase.dart';
+import 'package:odd_sprat/src/features/auth/domain/entities/user.dart';
+import 'package:odd_sprat/src/features/auth/domain/repositories/auth_repository.dart';
 
 class LoginUseCase implements UseCase<User, LoginParams> {
   final AuthRepository _repository;
@@ -20,6 +20,6 @@ class LoginParams {
   final String password;
   LoginParams({
     required this.email,
-    required this.password,
+    required this.password, required String name,
   });
 }

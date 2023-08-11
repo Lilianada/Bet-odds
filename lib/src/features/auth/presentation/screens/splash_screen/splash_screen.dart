@@ -1,6 +1,6 @@
 // splash_screen.dart
 import 'package:flutter/material.dart';
-import 'package:live_score/src/config/app_route.dart';
+import 'package:odd_sprat/src/config/app_route.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

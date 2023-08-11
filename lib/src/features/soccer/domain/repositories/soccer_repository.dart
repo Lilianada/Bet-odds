@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:live_score/src/core/domain/entities/league.dart';
+import 'package:odd_sprat/src/core/domain/entities/league.dart';
 
 import '../../../../core/domain/entities/betting_odds.dart';
 import '../../../../core/domain/entities/soccer_fixture.dart';

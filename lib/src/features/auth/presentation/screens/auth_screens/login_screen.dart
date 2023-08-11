@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:live_score/src/config/app_route.dart';
-import 'package:live_score/src/core/error/response_status.dart';
-import 'package:live_score/src/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:live_score/src/features/auth/presentation/cubit/auth_state.dart';
-import 'package:live_score/src/features/soccer/presentation/widgets/block_dialog.dart';
+import 'package:odd_sprat/src/config/app_route.dart';
+import 'package:odd_sprat/src/core/error/response_status.dart';
+import 'package:odd_sprat/src/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:odd_sprat/src/features/auth/presentation/cubit/auth_state.dart';
+import 'package:odd_sprat/src/features/soccer/presentation/widgets/block_dialog.dart';
 
 import '../../../../../config/app_constants.dart';
 
@@ -302,7 +302,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, Routes.signUp);
+                      Navigator.pushNamed(context, Routes.signup);
                     },
                     child: const Text(
                       'Sign Up',

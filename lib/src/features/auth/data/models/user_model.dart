@@ -1,16 +1,17 @@
 import 'dart:convert';
 
-import 'package:live_score/src/features/auth/domain/entities/user.dart';
+import 'package:odd_sprat/src/features/auth/domain/entities/user.dart';
 
 class UserModel extends User {
   final String id;
   final String email;
   final String name;
+
   const UserModel({
     required this.id,
     required this.email,
     required this.name,
-  }) : super(id: id, email: email, name: name);
+  }) : super(id: id, email: email, username: name);
 
   UserModel copyWith({
     String? id,
@@ -46,7 +47,7 @@ class UserModel extends User {
       UserModel.fromMap(json.decode(source));
 
   @override
-  String toString() => 'UserModel(id: $id, email: $email, name: $name)';
+  String toString() => 'UserModel(id: $id, email: $email, username: $username)';
 
   @override
   bool operator ==(Object other) {
@@ -55,9 +56,9 @@ class UserModel extends User {
     return other is UserModel &&
         other.id == id &&
         other.email == email &&
-        other.name == name;
+        other.username == username;
   }
 
   @override
-  int get hashCode => id.hashCode ^ email.hashCode ^ name.hashCode;
+  int get hashCode => id.hashCode ^ email.hashCode ^ username.hashCode;
 }

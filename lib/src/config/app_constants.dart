@@ -5,6 +5,7 @@ class AppColors {
   static const Color background = Color.fromRGBO(4, 4, 5, 1);
   static const Color modal = Color.fromARGB(255, 23, 23, 23);
   static const Color secondary = Color(0xFF1969b2);
+  static const Color tertiary = Color.fromARGB(255, 203, 230, 255);
   static const Color white = Color(0xFFFFFFFF);
   static const Color grey = Color.fromARGB(255, 155, 155, 155);
   static const Color link = Color(0xFF00C9E6);
