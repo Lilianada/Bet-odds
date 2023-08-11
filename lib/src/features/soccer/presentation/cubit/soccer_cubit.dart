@@ -62,7 +62,6 @@ class SoccerCubit extends Cubit<SoccerStates> {
       (left) => emit(SoccerLeaguesLoadFailure(left.message)),
       (right) {
         for (League league in right) {
-          filteredLeagues.add(league);
           if (AppConstants.availableLeagues.contains(league.id)) {
             filteredLeagues.add(league);
             AppConstants.leaguesFixtures
@@ -89,7 +88,6 @@ class SoccerCubit extends Cubit<SoccerStates> {
           value.fixtures.clear();
         });
         for (SoccerFixture fixture in right) {
-          filteredFixtures.add(fixture);
           if (AppConstants.availableLeagues
               .contains(fixture.fixtureLeague.id)) {
             filteredFixtures.add(fixture);
@@ -104,10 +102,11 @@ class SoccerCubit extends Cubit<SoccerStates> {
     return filteredFixtures;
   }
 
+  List<SoccerFixture> filteredFixtures = [];
+
   Future<List<SoccerFixture>> getLiveFixtures() async {
     emit(SoccerFixturesLoading());
     final liveFixtures = await liveFixturesUseCase(NoParams());
-    List<SoccerFixture> filteredFixtures = [];
     liveFixtures.fold(
       (left) => emit(SoccerLiveFixturesLoadFailure(left.message)),
       (right) {

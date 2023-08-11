@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:live_score/src/config/app_route.dart';
+import 'package:live_score/src/core/error/response_status.dart';
+import 'package:live_score/src/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:live_score/src/features/auth/presentation/cubit/auth_state.dart';
+import 'package:live_score/src/features/soccer/presentation/widgets/block_dialog.dart';
 
 import '../../../../../config/app_constants.dart';
 
@@ -12,8 +17,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _isPasswordVisible = false;
-
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -177,9 +180,24 @@ class _LoginPageState extends State<LoginPage> {
             // Sign Up Button
             Padding(
               padding: const EdgeInsets.only(top: 0.0),
-              child: Builder(builder: (context) {
+              child: BlocConsumer<AuthCubit, AuthState>(
+                  listener: (context, state) {
+                if (state is AuthLoadSuccess) {
+                  Navigator.pushReplacementNamed(context, Routes.soccerLayout);
+                }
+                if (state is AuthLoadFailed &&
+                    state.message ==
+                        DataSource.networkConnectError.getFailure().message) {
+                  buildBlockAlert(context: context, message: state.message);
+                }
+              }, builder: (context, state) {
+                final loading = state is AuthLoading;
                 return ElevatedButton(
-                  onPressed: () async {},
+                  onPressed: () async {
+                    context.read<AuthCubit>().login(
+                        email: _usernameController.text.trim(),
+                        password: _passwordController.text.trim());
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.background.withOpacity(0.4),
                     shape: RoundedRectangleBorder(
@@ -188,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                     minimumSize: const Size(double.infinity, 50.0),
                     // minimumSize: const Size(150, 50),
                   ),
-                  child: isLoading
+                  child: loading
                       ? const CircularProgressIndicator()
                       : const Text(
                           'Login',

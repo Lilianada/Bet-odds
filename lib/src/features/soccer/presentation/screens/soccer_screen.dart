@@ -32,6 +32,7 @@ class _SoccerScreenState extends State<SoccerScreen> {
 
   getLists() async {
     SoccerCubit cubit = context.read<SoccerCubit>();
+    // if (cubit.filteredLeagues.isNotEmpty) return;
     if (cubit.filteredLeagues.isEmpty) {
       await cubit.getLeagues();
     }
