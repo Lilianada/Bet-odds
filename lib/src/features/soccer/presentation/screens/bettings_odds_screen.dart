@@ -68,16 +68,16 @@ class _BettingOddsScreenState extends State<BettingOddsScreen> {
       NewsItem(
           headline:
               "Team A signs a new player! Lorem Ipsum is simply dummy text of the printing an",
-          imageUrl: "assets/images/@wanleee.jpeg"),
+          imageUrl: "assets/images/download.jpeg"),
       NewsItem(
           headline:
               "Team B wins the championship! Lorem Ipsum is simply dummy text of the printing an",
-          imageUrl: "assets/images/New Balance 2002.jpeg"),
+          imageUrl: "assets/images/skysports-manchester-city-fernandinho_5392783.jpg"),
       NewsItem(
           headline:
               "Star player injured in yesterday's match. Lorem Ipsum is simply dummy text of the printing an",
           imageUrl:
-              "assets/images/new balance 2002r protection pack rain cloud.jpeg"),
+              "assets/images/liverpool.jpeg"),
     ];
 
     return Scaffold(

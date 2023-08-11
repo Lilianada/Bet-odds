@@ -107,19 +107,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
-                        child: Image.asset('assets/images/@wanleee.jpeg',
+                        child: Image.asset('assets/images/liverpool.jpeg',
                             fit: BoxFit.cover),
                       ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Image.asset(
-                            'assets/images/New Balance 2002.jpeg',
+                            'assets/images/pl_completed_transfers.webp',
                             fit: BoxFit.cover),
                       ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Image.asset(
-                            'assets/images/new balance 2002r protection pack rain cloud.jpeg',
+                            'assets/images/download.jpeg',
                             fit: BoxFit.cover),
                       ),
                     ],
