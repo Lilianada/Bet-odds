@@ -4,7 +4,6 @@ import 'package:odd_sprat/src/features/odds/presentation/cubit/betting_odds_cubi
 import 'package:odd_sprat/src/features/auth/presentation/screens/login_screen.dart';
 import 'package:odd_sprat/src/features/screens/splash_screen/splash_screen.dart';
 import 'package:odd_sprat/src/features/soccer/presentation/screens/bettings_odds_screen.dart';
-// import 'package:odd_sprat/src/features/odds/presentation/screens/betting_odds_screen.dart';
 
 import '../container_injector.dart';
 import '../core/domain/entities/soccer_fixture.dart';
@@ -65,7 +64,6 @@ class AppRouter {
         child: LoginPage(),
       ), 
     );
-
       case Routes.soccerLayout:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
