@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:live_score/src/config/app_route.dart';
 
-import '../../../config/app_constants.dart';
+import '../../../../../config/app_constants.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -162,39 +165,41 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   // TODO: Navigate to Forgot Password Screen
                 },
-                child: const Text("Forgot password?", 
-                style: TextStyle(
-                  color: AppColors.labelTextStyle,
-                  fontSize: 14,
-                ),),
+                child: const Text(
+                  "Forgot password?",
+                  style: TextStyle(
+                    color: AppColors.labelTextStyle,
+                    fontSize: 14,
+                  ),
+                ),
               ),
             ),
             // Sign Up Button
             Padding(
               padding: const EdgeInsets.only(top: 0.0),
-              child: ElevatedButton(
-                onPressed: () async {
-                  print("clicked");
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.background.withOpacity(0.4),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+              child: Builder(builder: (context) {
+                return ElevatedButton(
+                  onPressed: () async {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.background.withOpacity(0.4),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    minimumSize: const Size(double.infinity, 50.0),
+                    // minimumSize: const Size(150, 50),
                   ),
-                  minimumSize: const Size(double.infinity, 50.0),
-                  // minimumSize: const Size(150, 50),
-                ),
-                child: isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text(
-                        'Signup',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.white,
+                  child: isLoading
+                      ? const CircularProgressIndicator()
+                      : const Text(
+                          'Login',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.white,
+                          ),
                         ),
-                      ),
-              ),
+                );
+              }),
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -230,10 +235,10 @@ class _LoginPageState extends State<LoginPage> {
             // Or Continue as Guest Button
             ElevatedButton(
               onPressed: () {
-                //TODO: Implement continue as guest functionality
+                Navigator.pushNamed(context, Routes.soccerLayout);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.transparent,
+                backgroundColor: AppColors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -279,7 +284,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/signup');
+                      Navigator.pushNamed(context, Routes.signUp);
                     },
                     child: const Text(
                       'Sign Up',

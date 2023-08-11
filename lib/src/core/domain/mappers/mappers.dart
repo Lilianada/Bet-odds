@@ -39,9 +39,7 @@ extension FixtureLeagueExtension on FixtureLeagueModel {
 
 extension OddsExtension on BettingOddsModel {
   BettingOdds toDomain() => BettingOdds(
-        date: date,
-        oddsList: oddsList,
-        match: match,
+        update: update,
         fixture: fixture,
         league: league,
         teams: teams,

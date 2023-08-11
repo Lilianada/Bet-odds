@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:live_score/src/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:live_score/src/features/auth/presentation/screens/auth_screens/login_screen.dart';
+import 'package:live_score/src/features/auth/presentation/screens/auth_screens/signup_screen.dart';
+import 'package:live_score/src/features/auth/presentation/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:live_score/src/features/odds/presentation/cubit/betting_odds_cubit.dart';
-import 'package:live_score/src/features/screens/splash_screen/splash_screen.dart';
+import 'package:live_score/src/features/auth/presentation/screens/splash_screen/splash_screen.dart';
 import 'package:live_score/src/features/soccer/presentation/screens/bettings_odds_screen.dart';
 // import 'package:live_score/src/features/odds/presentation/screens/betting_odds_screen.dart';
 
@@ -28,25 +32,32 @@ class Routes {
   static const String bookies = "bookies";
   static const String odds = "odds";
   static const String splashScreen = "splashScreen";
+  static const String onboarding = "onboardingScreen";
+  static const String signUp = "signUpScreen";
+  static const String login = "loginScreen";
 }
 
 class AppRouter {
   static Route routesGenerator(RouteSettings settings) {
     switch (settings.name) {
       case Routes.splashScreen:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case Routes.onboarding:
+        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+      case Routes.signUp:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (context) => sl<SoccerCubit>(),
-            child:  SplashScreen(),
+            create: (context) => sl<AuthCubit>(),
+            child: SignupScreen(),
           ),
         );
-      // case Routes.signup:
-      //   return MaterialPageRoute(
-      //     builder: (context) => BlocProvider(
-      //       // create: (context) => sl<>(),
-      //       child: const Login(),
-      //     ),
-      //   );
+      case Routes.login:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => sl<AuthCubit>(),
+            child: const LoginPage(),
+          ),
+        );
       case Routes.soccerLayout:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(

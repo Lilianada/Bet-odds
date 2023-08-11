@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:live_score/src/config/app_route.dart';
+import 'package:live_score/src/core/error/response_status.dart';
+import 'package:live_score/src/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:live_score/src/features/auth/presentation/cubit/auth_state.dart';
+import 'package:live_score/src/features/soccer/presentation/widgets/block_dialog.dart';
 
-import '../../../config/app_constants.dart';
-import '../../../core/auth/auth_service.dart';
+import '../../../../../config/app_constants.dart';
+import '../../../../../core/auth/auth_service.dart';
 
 class SignupScreen extends StatefulWidget {
   late final AuthService authService;
@@ -18,7 +24,6 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late String _email, _password;
 
   bool passwordVisible = false;
   bool confirmPasswordVisible = false;
@@ -256,46 +261,53 @@ class _SignupScreenState extends State<SignupScreen> {
               // Sign Up Button
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (_validatePassword(_passwordController.text) &&
-                        _validateConfirmPassword(
-                            _confirmPasswordController.text)) {
-                      print("clicked");
-                      if (_formKey.currentState!.validate()) {
-                        dynamic result = await widget.authService
-                            .signUpWithEmailAndPassword(_email, _password);
-                        final BuildContext currentContext = context;
-                        final snackBar = SnackBar(
-                            content: Text(result == null
-                                ? 'Error Signing Up'
-                                : 'Signed Up'));
-                        // Make sure the context is still valid
-                        if (currentContext.mounted) {
-                          ScaffoldMessenger.of(currentContext)
-                              .showSnackBar(snackBar);
-                        }
-                      }
+                child: BlocConsumer<AuthCubit, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthLoadSuccess) {
+                      Navigator.pushReplacementNamed(
+                          context, Routes.soccerLayout);
+                    }
+                    if (state is AuthLoadFailed &&
+                        state.message ==
+                            DataSource.networkConnectError
+                                .getFailure()
+                                .message) {
+                      buildBlockAlert(context: context, message: state.message);
                     }
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.background.withOpacity(0.4),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    minimumSize: const Size(double.infinity, 50.0),
-                    // minimumSize: const Size(150, 50),
-                  ),
-                  child: isLoading
-                      ? const CircularProgressIndicator()
-                      : const Text(
-                          'Signup',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.white,
-                          ),
+                  builder: (context, state) {
+                    final loading = state is AuthLoading;
+                    return ElevatedButton(
+                      onPressed: () async {
+                        if (_validatePassword(_passwordController.text) &&
+                            _validateConfirmPassword(
+                                _confirmPasswordController.text)) {
+                          context.read<AuthCubit>().signUpWithEmail(
+                              email: _emailController.text.trim(),
+                              password: _passwordController.text.trim(),
+                              name: _usernameController.text.trim());
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.background.withOpacity(0.4),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
+                        minimumSize: const Size(double.infinity, 50.0),
+                        // minimumSize: const Size(150, 50),
+                      ),
+                      child: loading
+                          ? const CircularProgressIndicator()
+                          : const Text(
+                              'Signup',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.white,
+                              ),
+                            ),
+                    );
+                  },
                 ),
               ),
               const SizedBox(height: 20),
@@ -381,10 +393,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushNamed(context, '/login');
+                        Navigator.pushReplacementNamed(context, Routes.login);
                       },
                       child: const Text(
-                        'Sign In',
+                        'Log In',
                         style: TextStyle(
                           color: AppColors.background,
                           fontSize: 14.0,

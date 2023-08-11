@@ -1,11 +1,10 @@
 // splash_screen.dart
 import 'package:flutter/material.dart';
-
-import '../../../config/app_constants.dart';
-import '../auth_screens/login_screen.dart';
-import '../onboarding_screen/onboarding_screen.dart';
+import 'package:live_score/src/config/app_route.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -20,11 +19,10 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigateToHome() async {
     await Future.delayed(
         const Duration(seconds: 3)); // 3 seconds delay for splash
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                 const OnboardingScreen())); // Navigates to another page after splash
+    // ignore: use_build_context_synchronously
+    if (!context.mounted) return;
+    Navigator.pushReplacementNamed(
+        context, Routes.onboarding); // Navigates to another page after splash
   }
 
   @override
@@ -34,10 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-              Image.asset(
-                'assets/images/Oddsprat_Logo.png',
-                height: 150,
-              ),
+            Image.asset(
+              'assets/images/Oddsprat_Logo.png',
+              height: 150,
+            ),
             Text(
               'Live scores & betting tips',
               style: TextStyle(
