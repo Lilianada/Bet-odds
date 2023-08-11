@@ -1,6 +1,7 @@
 // onboarding_screen.dart
 import 'package:flutter/material.dart';
 import 'package:odd_sprat/src/features/auth/presentation/screens/login_screen.dart';
+import 'package:odd_sprat/src/features/soccer/presentation/screens/offers_screen.dart';
 import 'dart:async';
 import '../../../config/app_constants.dart';
 import '../../auth/presentation/screens/signup_screen.dart';
@@ -50,7 +51,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       if (_start == 0) {
         timer.cancel();
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => SignupScreen()));
+            context, MaterialPageRoute(builder: (context) => OffersScreen()));
       } else {
         setState(() {
           _start--;

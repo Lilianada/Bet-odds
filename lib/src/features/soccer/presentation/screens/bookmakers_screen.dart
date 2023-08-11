@@ -56,19 +56,19 @@ class BookmakersScreen extends StatelessWidget {
                   Row(
                     children: [
                       Image.asset(bookmakers[0].imageUrl, width: 40, height: 40, fit: BoxFit.cover),
-                      SizedBox(width: 8),
-                      Expanded(child: Text(bookmakers[0].name, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
+                      const SizedBox(width: 8),
+                      Expanded(child: Text(bookmakers[0].name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18))),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(bookmakers[0].description),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(DateFormat.yMMMd().format(matchDate), style: TextStyle(fontWeight: FontWeight.w500)),
-                      Text(matchTime, style: TextStyle(fontWeight: FontWeight.w500)),
-                      Text(venue, style: TextStyle(fontWeight: FontWeight.w500)),
+                      Text(DateFormat.yMMMd().format(matchDate), style: const TextStyle(fontWeight: FontWeight.w500)),
+                      const Text(matchTime, style: TextStyle(fontWeight: FontWeight.w500)),
+                      const Text(venue, style: TextStyle(fontWeight: FontWeight.w500)),
                     ],
                   ),
                 ],
