@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:odd_sprat/src/core/utils/app_strings.dart';
 import '../widgets/no_fixtures_today.dart';
 import '../widgets/leagues_header.dart';
 import '../cubit/soccer_state.dart';
@@ -14,33 +15,42 @@ class FixturesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SoccerCubit cubit = context.read<SoccerCubit>();
-    return BlocBuilder<SoccerCubit, SoccerStates>(
-      builder: (context, state) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            LeaguesView(leagues: cubit.filteredLeagues, getFixtures: true),
-            const SizedBox(height: AppSize.s10),
-            cubit.currentFixtures.isNotEmpty
-                ? Expanded(
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        String fixtureTime =
-                            cubit.currentFixtures[index].fixture.date;
-                        final localTime = DateTime.parse(fixtureTime).toLocal();
-                        final formattedTime =
-                            DateFormat("h:mm a").format(localTime);
-                        return FixtureCard(
-                            soccerFixture: cubit.currentFixtures[index],
-                            fixtureTime: formattedTime);
-                      },
-                      itemCount: cubit.currentFixtures.length,
-                    ),
-                  )
-                : const NoFixturesToday(),
-          ],
-        );
-      },
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text(
+          AppStrings.fixtures,
+        ),
+      ),
+      body: BlocBuilder<SoccerCubit, SoccerStates>(
+        builder: (context, state) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              LeaguesView(leagues: cubit.filteredLeagues, getFixtures: true),
+              const SizedBox(height: AppSize.s10),
+              cubit.currentFixtures.isNotEmpty
+                  ? Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          String fixtureTime =
+                              cubit.currentFixtures[index].fixture.date;
+                          final localTime =
+                              DateTime.parse(fixtureTime).toLocal();
+                          final formattedTime =
+                              DateFormat("h:mm a").format(localTime);
+                          return FixtureCard(
+                              soccerFixture: cubit.currentFixtures[index],
+                              fixtureTime: formattedTime);
+                        },
+                        itemCount: cubit.currentFixtures.length,
+                      ),
+                    )
+                  : const NoFixturesToday(),
+            ],
+          );
+        },
+      ),
     );
   }
 }

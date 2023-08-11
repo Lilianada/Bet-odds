@@ -3,7 +3,7 @@ class AppStrings {
   static const String noRouteFound = "No Route Found";
   static const String home = "Home";
   static const bookies = "Bookies";
-  static const odds = "Bettings Odds";
+  static const odds = "Odds";
   static const String homeTeam = "Home Team";
   static const String awayTeam = "Away Team";
   static const String homeOdds = "Home Odds";

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:odd_sprat/src/features/odds/presentation/screens/betting_odds_screen.dart';
 
 import '../../../../core/domain/entities/league.dart';
 import '../../../../core/domain/entities/soccer_fixture.dart';
@@ -12,7 +13,6 @@ import '../../domain/use_cases/day_fixtures_usecase.dart';
 import '../../domain/use_cases/leagues_usecase.dart';
 import '../../domain/use_cases/live_fixtures_usecase.dart';
 import '../../domain/use_cases/standings_usecase.dart';
-import '../screens/bettings_odds_screen.dart';
 import '../screens/fixtures_screen.dart';
 import '../screens/soccer_screen.dart';
 import '../screens/standings_screen.dart';

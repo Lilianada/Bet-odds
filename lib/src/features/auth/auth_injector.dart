@@ -1,5 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
-
 import 'package:odd_sprat/src/container_injector.dart';
 import 'package:odd_sprat/src/core/network/network_info.dart';
 import 'package:odd_sprat/src/features/auth/data/datasources/auth_datasource.dart';
@@ -18,16 +16,16 @@ void initAuth() {
         datasource: sl<FakeAuthDatasource>(),
         networkInfo: sl<NetworkInfoImpl>()))
     ..registerLazySingleton<GoogleSignInUseCase>(
-      () => GoogleSignInUseCase(sl<AuthRepository>()),
+      () => GoogleSignInUseCase(sl<AuthRepositoryImpl>()),
     )
     ..registerLazySingleton<LoginUseCase>(
-      () => LoginUseCase(sl<AuthRepository>()),
+      () => LoginUseCase(sl<AuthRepositoryImpl>()),
     )
     ..registerLazySingleton<SignOutUseCase>(
-      () => SignOutUseCase(sl<AuthRepository>()),
+      () => SignOutUseCase(sl<AuthRepositoryImpl>()),
     )
     ..registerLazySingleton<SignupUseCase>(
-      () => SignupUseCase(sl<AuthRepository>()),
+      () => SignupUseCase(sl<AuthRepositoryImpl>()),
     )
     ..registerLazySingleton<AuthCubit>(
       () => AuthCubit(

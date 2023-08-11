@@ -1,8 +1,8 @@
 // onboarding_screen.dart
 import 'package:flutter/material.dart';
+import 'package:odd_sprat/src/config/app_constants.dart';
 import 'package:odd_sprat/src/config/app_route.dart';
 import 'dart:async';
-import '../../../../../config/app_constants.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -14,13 +14,17 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   late Timer _timer;
   int _start = 10;
-  final _pageController = PageController();
+  late PageController _pageController;
+
   int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
-    startTimer();
+    _pageController = PageController();
+    Future.delayed(Duration.zero, () {
+      startTimer();
+    });
 
     // Start the slideshow timer
     Timer.periodic(const Duration(seconds: 4), (Timer timer) {
@@ -30,11 +34,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         _currentPage = 0;
       }
 
-      _pageController.animateToPage(
-        _currentPage,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeIn,
-      );
+      if (_pageController.hasClients) {
+        _pageController.animateToPage(
+          _currentPage,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeIn,
+        );
+      }
     });
   }
 
@@ -54,13 +60,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void dispose() {
     _timer.cancel();
-    _pageController.dispose(); // Dispose the PageController when not needed
+    _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.tertiary,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -98,19 +105,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
-                        child: Image.asset('assets/images/@wanleee.jpeg',
+                        child: Image.asset('assets/images/liverpool.jpeg',
                             fit: BoxFit.cover),
                       ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Image.asset(
-                            'assets/images/New Balance 2002.jpeg',
+                            'assets/images/pl_completed_transfers.webp',
                             fit: BoxFit.cover),
                       ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
-                        child: Image.asset(
-                            'assets/images/new balance 2002r protection pack rain cloud.jpeg',
+                        child: Image.asset('assets/images/download.jpeg',
                             fit: BoxFit.cover),
                       ),
                     ],

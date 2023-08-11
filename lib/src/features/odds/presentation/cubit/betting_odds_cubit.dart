@@ -20,7 +20,6 @@ class BettingOddsCubit extends Cubit<BettingOddsStates> {
   Future<void> getOdds({required String date}) async {
     emit(BettingOddsLoading());
     final result = await getBettingOddsUseCase(date);
-
     result.fold(
       (left) {
         emit(BettingOddsLoadFailure(left.message));

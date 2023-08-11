@@ -51,61 +51,70 @@ class _SoccerScreenState extends State<SoccerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SoccerCubit, SoccerStates>(
-      listener: (context, state) {
-        if (state is SoccerLeaguesLoaded && state.leagues.isEmpty) {
-          buildBlockAlert(context: context, message: AppStrings.reachedLimits);
-        }
-        if (state is SoccerFixturesLoadFailure &&
-            state.message ==
-                DataSource.networkConnectError.getFailure().message) {
-          buildBlockAlert(context: context, message: state.message);
-        }
-        if (state is SoccerLiveFixturesLoadFailure &&
-            state.message ==
-                DataSource.networkConnectError.getFailure().message) {
-          buildBlockAlert(context: context, message: state.message);
-        }
-        if (state is SoccerLeaguesLoadFailure &&
-            state.message ==
-                DataSource.networkConnectError.getFailure().message) {
-          buildBlockAlert(context: context, message: state.message);
-        }
-      },
-      builder: (context, state) {
-        SoccerCubit cubit = context.read<SoccerCubit>();
-        return state is SoccerFixturesLoading || state is SoccerLeaguesLoading
-            ? centerIndicator()
-            : RefreshIndicator(
-                onRefresh: () async {
-                  await cubit.getLiveFixtures();
-                  await cubit.getFixtures();
-                },
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: AppPadding.p20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (cubit.filteredLeagues.isNotEmpty) ...[
-                          LeaguesHeader(
-                            leagues: cubit.filteredLeagues,
-                            leagueName: null,
-                          ),
-                          const SizedBox(height: AppSize.s10),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text(
+          AppStrings.liveScore,
+        ),
+      ),
+      body: BlocConsumer<SoccerCubit, SoccerStates>(
+        listener: (context, state) {
+          if (state is SoccerLeaguesLoaded && state.leagues.isEmpty) {
+            buildBlockAlert(
+                context: context, message: AppStrings.reachedLimits);
+          }
+          if (state is SoccerFixturesLoadFailure &&
+              state.message ==
+                  DataSource.networkConnectError.getFailure().message) {
+            buildBlockAlert(context: context, message: state.message);
+          }
+          if (state is SoccerLiveFixturesLoadFailure &&
+              state.message ==
+                  DataSource.networkConnectError.getFailure().message) {
+            buildBlockAlert(context: context, message: state.message);
+          }
+          if (state is SoccerLeaguesLoadFailure &&
+              state.message ==
+                  DataSource.networkConnectError.getFailure().message) {
+            buildBlockAlert(context: context, message: state.message);
+          }
+        },
+        builder: (context, state) {
+          SoccerCubit cubit = context.read<SoccerCubit>();
+          return state is SoccerFixturesLoading || state is SoccerLeaguesLoading
+              ? centerIndicator()
+              : RefreshIndicator(
+                  onRefresh: () async {
+                    await cubit.getLiveFixtures();
+                    await cubit.getFixtures();
+                  },
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: AppPadding.p20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (cubit.filteredLeagues.isNotEmpty) ...[
+                            LeaguesHeader(
+                              leagues: cubit.filteredLeagues,
+                              leagueName: null,
+                            ),
+                            const SizedBox(height: AppSize.s10),
+                          ],
+                          if (liveFixtures.isNotEmpty) ...[
+                            ViewLiveFixtures(fixtures: liveFixtures),
+                            const SizedBox(height: AppSize.s10),
+                          ],
+                          ViewDayFixtures(fixtures: fixtures),
                         ],
-                        if (liveFixtures.isNotEmpty) ...[
-                          ViewLiveFixtures(fixtures: liveFixtures),
-                          const SizedBox(height: AppSize.s10),
-                        ],
-                        ViewDayFixtures(fixtures: fixtures),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              );
-      },
+                );
+        },
+      ),
     );
   }
 }

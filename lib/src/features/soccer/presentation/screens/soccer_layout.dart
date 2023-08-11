@@ -15,9 +15,6 @@ class SoccerLayout extends StatelessWidget {
       builder: (context, state) {
         SoccerCubit cubit = context.read<SoccerCubit>();
         return Scaffold(
-          appBar: AppBar(
-            title: Text(cubit.titles[cubit.currentIndex]),
-          ),
           body: cubit.screens[cubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: cubit.currentIndex,
@@ -40,7 +37,8 @@ class SoccerLayout extends StatelessWidget {
                 icon: Icon(Icons.bar_chart),
                 label: AppStrings.standings,
               ),
-              BottomNavigationBarItem( // Added Odds item
+              BottomNavigationBarItem(
+                // Added Odds item
                 icon: Icon(Icons.insert_chart),
                 label: AppStrings.odds,
               ),
@@ -54,7 +52,7 @@ class SoccerLayout extends StatelessWidget {
               // ),
             ],
             unselectedItemColor: Colors.grey, // Inactive color
-            selectedItemColor: Colors.blue,   // Active color
+            selectedItemColor: Colors.blue, // Active color
           ),
         );
       },

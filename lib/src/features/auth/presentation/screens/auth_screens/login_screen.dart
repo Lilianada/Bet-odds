@@ -17,6 +17,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -86,234 +87,266 @@ class _LoginPageState extends State<LoginPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/Oddsprat_Logo.png',
-              height: 100,
-            ),
-            const SizedBox(height: 10),
-            // Username
-            TextFormField(
-              controller: _usernameController,
-              decoration: const InputDecoration(
-                labelText: "Username",
-                prefixIcon: Icon(Icons.person, color: AppColors.labelTextStyle),
-                labelStyle: TextStyle(color: AppColors.labelTextStyle),
-                floatingLabelStyle: AppStyles.floatingLabelTextStyle,
-                focusedBorder: AppStyles.focusedBorder,
-                enabledBorder: AppStyles.enabledBorder,
-                border: AppStyles.enabledBorder,
-              ),
-              style: const TextStyle(color: AppColors.background),
-              onChanged: (value) {
-                setState(() {
-                  _validateUserName(value);
-                });
-              },
-              validator: (value) {
-                if (value!.isEmpty) return 'Please enter a username';
-                return null;
-              },
-              inputFormatters: [
-                FilteringTextInputFormatter.deny(RegExp('[\\s]')),
-              ],
-            ),
-            const SizedBox(height: 16.0),
-            // Password
-            TextFormField(
-              style: const TextStyle(
-                color: AppColors.background,
-              ),
-              controller: _passwordController,
-              obscureText: !passwordVisible,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                labelStyle: const TextStyle(color: AppColors.labelTextStyle),
-                floatingLabelStyle: AppStyles.floatingLabelTextStyle,
-                focusedBorder: AppStyles.focusedBorder,
-                enabledBorder: AppStyles.enabledBorder,
-                border: AppStyles.enabledBorder,
-                prefixIcon: const Icon(Icons.lock_outline,
-                    color: AppColors.labelTextStyle),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    passwordVisible ? Icons.visibility : Icons.visibility_off,
-                    color: AppColors.labelTextStyle,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      passwordVisible = !passwordVisible;
-                      confirmPasswordVisible = false;
-                    });
-                  },
-                ),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  _validatePassword(value);
-                });
-              },
-              validator: (value) {
-                if (value!.isEmpty || value.length < 6) {
-                  return 'Password must be at least 6 characters long';
-                }
-                return passwordError;
-              },
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  // TODO: Navigate to Forgot Password Screen
-                },
-                child: const Text(
-                  "Forgot password?",
-                  style: TextStyle(
-                    color: AppColors.labelTextStyle,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-            ),
-            // Sign Up Button
-            Padding(
-              padding: const EdgeInsets.only(top: 0.0),
-              child: BlocConsumer<AuthCubit, AuthState>(
-                  listener: (context, state) {
-                if (state is AuthLoadSuccess) {
-                  Navigator.pushReplacementNamed(context, Routes.soccerLayout);
-                }
-                if (state is AuthLoadFailed &&
-                    state.message ==
-                        DataSource.networkConnectError.getFailure().message) {
-                  buildBlockAlert(context: context, message: state.message);
-                }
-              }, builder: (context, state) {
-                final loading = state is AuthLoading;
-                return ElevatedButton(
-                  onPressed: () async {
-                    context.read<AuthCubit>().login(
-                        email: _usernameController.text.trim(),
-                        password: _passwordController.text.trim());
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.background.withOpacity(0.4),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    minimumSize: const Size(double.infinity, 50.0),
-                    // minimumSize: const Size(150, 50),
-                  ),
-                  child: loading
-                      ? const CircularProgressIndicator()
-                      : const Text(
-                          'Login',
+            const SizedBox(height: 50),
+            Expanded(
+              child: Form(
+                key: _formKey,
+                child: ScrollConfiguration(
+                  behavior: const ScrollBehavior(),
+                  child: ListView(
+                    children: [
+                      Image.asset(
+                        'assets/images/Oddsprat_Logo.png',
+                        height: 100,
+                      ),
+                      const SizedBox(height: 10),
+                      // Username
+                      TextFormField(
+                        controller: _usernameController,
+                        decoration: const InputDecoration(
+                          labelText: "Username",
+                          prefixIcon: Icon(Icons.person,
+                              color: AppColors.labelTextStyle),
+                          labelStyle:
+                              TextStyle(color: AppColors.labelTextStyle),
+                          floatingLabelStyle: AppStyles.floatingLabelTextStyle,
+                          focusedBorder: AppStyles.focusedBorder,
+                          enabledBorder: AppStyles.enabledBorder,
+                          border: AppStyles.enabledBorder,
+                        ),
+                        style: const TextStyle(color: AppColors.background),
+                        onChanged: (value) {
+                          setState(() {
+                            _validateUserName(value);
+                          });
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) return 'Please enter a username';
+                          return null;
+                        },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(RegExp('[\\s]')),
+                        ],
+                      ),
+                      const SizedBox(height: 16.0),
+                      // Password
+                      TextFormField(
+                        style: const TextStyle(
+                          color: AppColors.background,
+                        ),
+                        controller: _passwordController,
+                        obscureText: !passwordVisible,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle:
+                              const TextStyle(color: AppColors.labelTextStyle),
+                          floatingLabelStyle: AppStyles.floatingLabelTextStyle,
+                          focusedBorder: AppStyles.focusedBorder,
+                          enabledBorder: AppStyles.enabledBorder,
+                          border: AppStyles.enabledBorder,
+                          prefixIcon: const Icon(Icons.lock_outline,
+                              color: AppColors.labelTextStyle),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: AppColors.labelTextStyle,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                passwordVisible = !passwordVisible;
+                                confirmPasswordVisible = false;
+                              });
+                            },
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _validatePassword(value);
+                          });
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty || value.length < 6) {
+                            return 'Password must be at least 6 characters long';
+                          }
+                          return passwordError;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            // TODO: Navigate to Forgot Password Screen
+                          },
+                          child: const Text(
+                            "Forgot password?",
+                            style: TextStyle(
+                              color: AppColors.labelTextStyle,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Sign Up Button
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0.0),
+                        child: BlocConsumer<AuthCubit, AuthState>(
+                          listener: (context, state) {
+                            if (state is AuthLoadSuccess) {
+                              Navigator.pushReplacementNamed(
+                                  context, Routes.soccerLayout);
+                            }
+                            if (state is AuthLoadFailed &&
+                                state.message ==
+                                    DataSource.networkConnectError
+                                        .getFailure()
+                                        .message) {
+                              buildBlockAlert(
+                                  context: context, message: state.message);
+                            }
+                          },
+                          builder: (context, state) {
+                            final loading = state is AuthLoading;
+                            return ElevatedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<AuthCubit>().login(
+                                      email: _usernameController.text.trim(),
+                                      password:
+                                          _passwordController.text.trim());
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    AppColors.background.withOpacity(0.4),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                minimumSize: const Size(double.infinity, 50.0),
+                                // minimumSize: const Size(150, 50),
+                              ),
+                              child: loading
+                                  ? const CircularProgressIndicator()
+                                  : const Text(
+                                      'Login',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.white,
+                                      ),
+                                    ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 30,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 1,
+                                color: AppColors.primary,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                              ),
+                            ),
+                            const Text(
+                              'OR',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                height: 1,
+                                color: AppColors.primary,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      // Or Continue as Guest Button
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, Routes.soccerLayout);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: const BorderSide(
+                                color: AppColors.labelTextStyle),
+                          ),
+                          minimumSize: const Size(double.infinity, 50.0),
+                        ),
+                        child: const Text(
+                          "Continue as Guest",
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.white,
+                            color: AppColors.labelTextStyle,
                           ),
                         ),
-                );
-              }),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 30,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 1,
-                      color: AppColors.primary,
-                      margin: const EdgeInsets.symmetric(horizontal: 12),
-                    ),
-                  ),
-                  const Text(
-                    'OR',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 1,
-                      color: AppColors.primary,
-                      margin: const EdgeInsets.symmetric(horizontal: 12),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            // Or Continue as Guest Button
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.soccerLayout);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.white,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  side: const BorderSide(color: AppColors.labelTextStyle),
-                ),
-                minimumSize: const Size(double.infinity, 50.0),
-              ),
-              child: const Text(
-                "Continue as Guest",
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.labelTextStyle,
-                ),
-              ),
-            ),
-
-            // Placeholder for third-party sign-in buttons
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.facebook, color: AppColors.primary),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Don\'t have an account?',
-                    style: TextStyle(
-                      color: AppColors.background,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5.0,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, Routes.signup);
-                    },
-                    child: const Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        color: AppColors.primary,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.normal,
                       ),
-                    ),
+
+                      // Placeholder for third-party sign-in buttons
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.facebook,
+                                color: AppColors.primary),
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 6.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Don\'t have an account?',
+                              style: TextStyle(
+                                color: AppColors.background,
+                                fontSize: 14.0,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 5.0,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushReplacementNamed(
+                                    context, Routes.signup);
+                              },
+                              child: const Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  color: AppColors.primary,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ],

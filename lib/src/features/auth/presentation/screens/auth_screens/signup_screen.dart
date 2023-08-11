@@ -101,314 +101,336 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const SizedBox(height: 32.0),
-              Image.asset(
-                'assets/images/Oddsprat_Logo.png',
-                height: 100,
-              ),
-              const SizedBox(height: 20),
-              // Username
-              TextFormField(
-                controller: _usernameController,
-                decoration: const InputDecoration(
-                  labelText: "Username",
-                  prefixIcon:
-                      Icon(Icons.person, color: AppColors.labelTextStyle),
-                  labelStyle: TextStyle(color: AppColors.labelTextStyle),
-                  floatingLabelStyle: AppStyles.floatingLabelTextStyle,
-                  focusedBorder: AppStyles.focusedBorder,
-                  enabledBorder: AppStyles.enabledBorder,
-                  border: AppStyles.enabledBorder,
-                ),
-                style: const TextStyle(color: AppColors.background),
-                onChanged: (value) {
-                  setState(() {
-                    _validateUserName(value);
-                  });
-                },
-                validator: (value) {
-                  if (value!.isEmpty) return 'Please enter a username';
-                  return null;
-                },
-                inputFormatters: [
-                  FilteringTextInputFormatter.deny(RegExp('[\\s]')),
-                ],
-              ),
-              const SizedBox(height: 16.0),
-              // Email
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  labelStyle: TextStyle(color: AppColors.labelTextStyle),
-                  floatingLabelStyle: AppStyles.floatingLabelTextStyle,
-                  focusedBorder: AppStyles.focusedBorder,
-                  enabledBorder: AppStyles.enabledBorder,
-                  border: AppStyles.enabledBorder,
-                  prefixIcon:
-                      Icon(Icons.mail_outline, color: AppColors.labelTextStyle),
-                ),
-                style: const TextStyle(color: AppColors.background),
-                onChanged: (value) {
-                  setState(() {
-                    _validateEmail(value);
-                  });
-                },
-                validator: (value) {
-                  if (value!.isEmpty || !value.contains('@')) {
-                    return 'Please enter a valid email';
-                  }
-                  return emailError;
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-              ),
-              const SizedBox(height: 16.0),
-              // Password
-              TextFormField(
-                style: const TextStyle(
-                  color: AppColors.background,
-                ),
-                controller: _passwordController,
-                obscureText: !passwordVisible,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: const TextStyle(color: AppColors.labelTextStyle),
-                  floatingLabelStyle: AppStyles.floatingLabelTextStyle,
-                  focusedBorder: AppStyles.focusedBorder,
-                  enabledBorder: AppStyles.enabledBorder,
-                  border: AppStyles.enabledBorder,
-                  prefixIcon: const Icon(Icons.lock_outline,
-                      color: AppColors.labelTextStyle),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      passwordVisible ? Icons.visibility : Icons.visibility_off,
-                      color: AppColors.labelTextStyle,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        passwordVisible = !passwordVisible;
-                        confirmPasswordVisible = false;
-                      });
-                    },
-                  ),
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _validatePassword(value);
-                  });
-                },
-                validator: (value) {
-                  if (value!.isEmpty || value.length < 6) {
-                    return 'Password must be at least 6 characters long';
-                  }
-                  return passwordError;
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-              ),
-              const SizedBox(height: 16.0),
-              // Confirm Password
-              TextFormField(
-                style: const TextStyle(
-                  color: AppColors.background,
-                ),
-                controller: _confirmPasswordController,
-                obscureText: !confirmPasswordVisible,
-                decoration: InputDecoration(
-                  labelText: 'Confirm Password',
-                  labelStyle: const TextStyle(color: AppColors.labelTextStyle),
-                  floatingLabelStyle: AppStyles.floatingLabelTextStyle,
-                  focusedBorder: AppStyles.focusedBorder,
-                  enabledBorder: AppStyles.enabledBorder,
-                  border: AppStyles.enabledBorder,
-                  prefixIcon: const Icon(Icons.lock_outline,
-                      color: AppColors.labelTextStyle),
-                  suffixIcon: Row(
-                    mainAxisSize: MainAxisSize.min,
+        child: Column(
+          children: [
+            Expanded(
+              child: Form(
+                key: _formKey,
+                child: ScrollConfiguration(
+                  behavior: const ScrollBehavior(),
+                  child: ListView(
+                    padding: EdgeInsets.zero,
                     children: [
-                      IconButton(
-                        icon: Icon(
-                          confirmPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: AppColors.labelTextStyle,
+                      const SizedBox(height: 32.0),
+                      Image.asset(
+                        'assets/images/Oddsprat_Logo.png',
+                        height: 100,
+                      ),
+                      const SizedBox(height: 20),
+                      // Username
+                      TextFormField(
+                        controller: _usernameController,
+                        decoration: const InputDecoration(
+                          labelText: "Username",
+                          prefixIcon: Icon(Icons.person,
+                              color: AppColors.labelTextStyle),
+                          labelStyle:
+                              TextStyle(color: AppColors.labelTextStyle),
+                          floatingLabelStyle: AppStyles.floatingLabelTextStyle,
+                          focusedBorder: AppStyles.focusedBorder,
+                          enabledBorder: AppStyles.enabledBorder,
+                          border: AppStyles.enabledBorder,
                         ),
-                        onPressed: () {
+                        style: const TextStyle(color: AppColors.background),
+                        onChanged: (value) {
                           setState(() {
-                            confirmPasswordVisible = !confirmPasswordVisible;
+                            _validateUserName(value);
                           });
                         },
+                        validator: (value) {
+                          if (value!.isEmpty) return 'Please enter a username';
+                          return null;
+                        },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(RegExp('[\\s]')),
+                        ],
+                      ),
+                      const SizedBox(height: 16.0),
+                      // Email
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          labelStyle:
+                              TextStyle(color: AppColors.labelTextStyle),
+                          floatingLabelStyle: AppStyles.floatingLabelTextStyle,
+                          focusedBorder: AppStyles.focusedBorder,
+                          enabledBorder: AppStyles.enabledBorder,
+                          border: AppStyles.enabledBorder,
+                          prefixIcon: Icon(Icons.mail_outline,
+                              color: AppColors.labelTextStyle),
+                        ),
+                        style: const TextStyle(color: AppColors.background),
+                        onChanged: (value) {
+                          setState(() {
+                            _validateEmail(value);
+                          });
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty || !value.contains('@')) {
+                            return 'Please enter a valid email';
+                          }
+                          return emailError;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                      ),
+                      const SizedBox(height: 16.0),
+                      // Password
+                      TextFormField(
+                        style: const TextStyle(
+                          color: AppColors.background,
+                        ),
+                        controller: _passwordController,
+                        obscureText: !passwordVisible,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle:
+                              const TextStyle(color: AppColors.labelTextStyle),
+                          floatingLabelStyle: AppStyles.floatingLabelTextStyle,
+                          focusedBorder: AppStyles.focusedBorder,
+                          enabledBorder: AppStyles.enabledBorder,
+                          border: AppStyles.enabledBorder,
+                          prefixIcon: const Icon(Icons.lock_outline,
+                              color: AppColors.labelTextStyle),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: AppColors.labelTextStyle,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                passwordVisible = !passwordVisible;
+                                confirmPasswordVisible = false;
+                              });
+                            },
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _validatePassword(value);
+                          });
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty || value.length < 6) {
+                            return 'Password must be at least 6 characters long';
+                          }
+                          return passwordError;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                      ),
+                      const SizedBox(height: 16.0),
+                      // Confirm Password
+                      TextFormField(
+                        style: const TextStyle(
+                          color: AppColors.background,
+                        ),
+                        controller: _confirmPasswordController,
+                        obscureText: !confirmPasswordVisible,
+                        decoration: InputDecoration(
+                          labelText: 'Confirm Password',
+                          labelStyle:
+                              const TextStyle(color: AppColors.labelTextStyle),
+                          floatingLabelStyle: AppStyles.floatingLabelTextStyle,
+                          focusedBorder: AppStyles.focusedBorder,
+                          enabledBorder: AppStyles.enabledBorder,
+                          border: AppStyles.enabledBorder,
+                          prefixIcon: const Icon(Icons.lock_outline,
+                              color: AppColors.labelTextStyle),
+                          suffixIcon: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                  confirmPasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: AppColors.labelTextStyle,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    confirmPasswordVisible =
+                                        !confirmPasswordVisible;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _validateConfirmPassword(value);
+                          });
+                        },
+                        validator: (value) {
+                          if (value != _passwordController.text) {
+                            return 'Passwords do not match';
+                          }
+                          return confirmPasswordError;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                      ),
+                      // Sign Up Button
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: BlocConsumer<AuthCubit, AuthState>(
+                          listener: (context, state) {
+                            if (state is AuthLoadSuccess) {
+                              Navigator.pushReplacementNamed(
+                                  context, Routes.soccerLayout);
+                            }
+                            if (state is AuthLoadFailed &&
+                                state.message ==
+                                    DataSource.networkConnectError
+                                        .getFailure()
+                                        .message) {
+                              buildBlockAlert(
+                                  context: context, message: state.message);
+                            }
+                          },
+                          builder: (context, state) {
+                            final loading = state is AuthLoading;
+                            return ElevatedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<AuthCubit>().signUpWithEmail(
+                                      email: _emailController.text.trim(),
+                                      password: _passwordController.text.trim(),
+                                      name: _usernameController.text.trim());
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    AppColors.background.withOpacity(0.4),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                minimumSize: const Size(double.infinity, 50.0),
+                                // minimumSize: const Size(150, 50),
+                              ),
+                              child: loading
+                                  ? const CircularProgressIndicator()
+                                  : const Text(
+                                      'Signup',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.white,
+                                      ),
+                                    ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 30,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 1,
+                                color: AppColors.primary,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                              ),
+                            ),
+                            const Text(
+                              'OR',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                height: 1,
+                                color: AppColors.primary,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      // Or Continue as Guest Button
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, Routes.soccerLayout);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: const BorderSide(
+                                color: AppColors.labelTextStyle),
+                          ),
+                          minimumSize: const Size(double.infinity, 50.0),
+                        ),
+                        child: const Text(
+                          "Continue as Guest",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.labelTextStyle,
+                          ),
+                        ),
+                      ),
+
+                      // Placeholder for third-party sign-in buttons
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.facebook),
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 6.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Already have an account?',
+                              style: TextStyle(
+                                color: AppColors.background,
+                                fontSize: 14.0,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 5.0,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushReplacementNamed(
+                                    context, Routes.login);
+                              },
+                              child: const Text(
+                                'Log In',
+                                style: TextStyle(
+                                  color: AppColors.background,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-                onChanged: (value) {
-                  setState(() {
-                    _validateConfirmPassword(value);
-                  });
-                },
-                validator: (value) {
-                  if (value != _passwordController.text) {
-                    return 'Passwords do not match';
-                  }
-                  return confirmPasswordError;
-                },
-                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
-              // Sign Up Button
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: BlocConsumer<AuthCubit, AuthState>(
-                  listener: (context, state) {
-                    if (state is AuthLoadSuccess) {
-                      Navigator.pushReplacementNamed(
-                          context, Routes.soccerLayout);
-                    }
-                    if (state is AuthLoadFailed &&
-                        state.message ==
-                            DataSource.networkConnectError
-                                .getFailure()
-                                .message) {
-                      buildBlockAlert(context: context, message: state.message);
-                    }
-                  },
-                  builder: (context, state) {
-                    final loading = state is AuthLoading;
-                    return ElevatedButton(
-                      onPressed: () async {
-                        if (_validatePassword(_passwordController.text) &&
-                            _validateConfirmPassword(
-                                _confirmPasswordController.text)) {
-                          context.read<AuthCubit>().signUpWithEmail(
-                              email: _emailController.text.trim(),
-                              password: _passwordController.text.trim(),
-                              name: _usernameController.text.trim());
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.background.withOpacity(0.4),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        minimumSize: const Size(double.infinity, 50.0),
-                        // minimumSize: const Size(150, 50),
-                      ),
-                      child: loading
-                          ? const CircularProgressIndicator()
-                          : const Text(
-                              'Signup',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.white,
-                              ),
-                            ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 30,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 1,
-                        color: AppColors.primary,
-                        margin: const EdgeInsets.symmetric(horizontal: 12),
-                      ),
-                    ),
-                    const Text(
-                      'OR',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        color: AppColors.primary,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 1,
-                        color: AppColors.primary,
-                        margin: const EdgeInsets.symmetric(horizontal: 12),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              // Or Continue as Guest Button
-              ElevatedButton(
-                onPressed: () {
-                  //TODO: Implement continue as guest functionality
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.transparent,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: const BorderSide(color: AppColors.labelTextStyle),
-                  ),
-                  minimumSize: const Size(double.infinity, 50.0),
-                ),
-                child: const Text(
-                  "Continue as Guest",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.labelTextStyle,
-                  ),
-                ),
-              ),
-
-              // Placeholder for third-party sign-in buttons
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.facebook),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 6.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Already have an account?',
-                      style: TextStyle(
-                        color: AppColors.background,
-                        fontSize: 14.0,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5.0,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushReplacementNamed(context, Routes.login);
-                      },
-                      child: const Text(
-                        'Log In',
-                        style: TextStyle(
-                          color: AppColors.background,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
