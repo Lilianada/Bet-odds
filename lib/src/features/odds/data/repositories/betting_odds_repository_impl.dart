@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:odd_sprat/src/core/domain/mappers/mappers.dart';
+import 'package:resultizer/src/core/domain/mappers/mappers.dart';
 
 import '../../../../core/domain/entities/betting_odds.dart';
 import '../../../../core/error/error_handler.dart';

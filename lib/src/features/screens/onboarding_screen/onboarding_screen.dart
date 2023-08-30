@@ -1,7 +1,7 @@
 // onboarding_screen.dart
 import 'package:flutter/material.dart';
-import 'package:odd_sprat/src/features/auth/presentation/screens/login_screen.dart';
-import 'package:odd_sprat/src/features/soccer/presentation/screens/offers_screen.dart';
+import 'package:resultizer/src/features/auth/presentation/screens/login_screen.dart';
+import 'package:resultizer/src/features/soccer/presentation/screens/offers_screen.dart';
 import 'dart:async';
 import '../../../config/app_constants.dart';
 import '../../auth/presentation/screens/signup_screen.dart';
@@ -51,7 +51,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       if (_start == 0) {
         timer.cancel();
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => OffersScreen()));
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
       } else {
         setState(() {
           _start--;
@@ -84,7 +84,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     fontWeight: FontWeight.bold,
                   )),
               const SizedBox(height: 16),
-              const Text('Oddsprat ',
+              const Text('Resultizer ',
                   style: TextStyle(
                     fontSize: 20,
                     color: AppColors.labelTextStyle,
@@ -131,7 +131,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
-                  'Oddsprat is a platform that provides you with the latest football news, livescores, betting tips and predictions',
+                  'Resultizer is a platform that provides you with the latest football news, livescores, betting tips and predictions',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,

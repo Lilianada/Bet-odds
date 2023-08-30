@@ -1,0 +1,208 @@
+# Query: odd_sprat
+# ContextLines: 1
+
+76 results - 33 files
+
+android/app/google-services.json:
+  12          "android_client_info": {
+  13:           "package_name": "com.example.resultizer"
+  14          }
+
+android/app/src/debug/AndroidManifest.xml:
+  1  <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  2:     package="com.example.resultizer">
+  3      <!-- The INTERNET permission is required for development. Specifically,
+
+android/app/src/main/AndroidManifest.xml:
+  1  <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  2:     package="com.example.resultizer">
+  3      <uses-permission android:name="android.permission.INTERNET" />
+
+android/app/src/main/kotlin/com/example/live_score/MainActivity.kt:
+  1: package com.example.resultizer
+  2  
+
+android/app/src/profile/AndroidManifest.xml:
+  1  <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  2:     package="com.example.resultizer">
+  3      <!-- The INTERNET permission is required for development. Specifically,
+
+lib/src/container_injector.dart:
+  3  import 'package:internet_connection_checker/internet_connection_checker.dart';
+  4: import 'package:resultizer/src/features/auth/auth_injector.dart';
+  5: import 'package:resultizer/src/features/odds/odds_injector.dart';
+  6  
+
+lib/src/config/app_route.dart:
+  2  import 'package:flutter_bloc/flutter_bloc.dart';
+  3: import 'package:resultizer/src/features/odds/presentation/cubit/betting_odds_cubit.dart';
+  4: import 'package:resultizer/src/features/auth/presentation/screens/login_screen.dart';
+  5: import 'package:resultizer/src/features/screens/splash_screen/splash_screen.dart';
+  6: import 'package:resultizer/src/features/soccer/presentation/screens/bettings_odds_screen.dart';
+  7  
+
+lib/src/core/domain/entities/betting_odds.dart:
+  3  import 'package:equatable/equatable.dart';
+  4: import 'package:resultizer/src/features/odds/data/models/odds_model.dart';
+  5  
+
+lib/src/core/domain/entities/soccer_fixture.dart:
+  1  import 'package:equatable/equatable.dart';
+  2: import 'package:resultizer/src/core/domain/entities/fixture.dart';
+  3: import 'package:resultizer/src/core/domain/entities/teams.dart';
+  4  import 'betting_odds.dart';
+
+lib/src/core/domain/mappers/mappers.dart:
+  1: import 'package:resultizer/src/features/odds/data/models/odds_model.dart';
+  2  
+
+lib/src/features/auth/auth_injector.dart:
+   1: import 'package:resultizer/src/container_injector.dart';
+   2: import 'package:resultizer/src/core/network/network_info.dart';
+   3: import 'package:resultizer/src/features/auth/data/datasources/auth_datasource.dart';
+   4: import 'package:resultizer/src/features/auth/data/repositories/auth_repository_impl.dart';
+   5: import 'package:resultizer/src/features/auth/domain/repositories/auth_repository.dart';
+   6: import 'package:resultizer/src/features/auth/domain/use_cases/google_sign_in_use_case.dart';
+   7: import 'package:resultizer/src/features/auth/domain/use_cases/login_use_case.dart';
+   8: import 'package:resultizer/src/features/auth/domain/use_cases/sign_out_use_case.dart';
+   9: import 'package:resultizer/src/features/auth/domain/use_cases/sign_up_use_case.dart';
+  10: import 'package:resultizer/src/features/auth/presentation/cubit/auth_cubit.dart';
+  11  
+
+lib/src/features/auth/data/datasources/auth_datasource.dart:
+  2  import 'package:google_sign_in/google_sign_in.dart';
+  3: import 'package:resultizer/src/core/error/firebase_error_handler.dart';
+  4: import 'package:resultizer/src/features/auth/data/models/user_model.dart';
+  5  
+
+lib/src/features/auth/data/models/user_model.dart:
+  2  
+  3: import 'package:resultizer/src/features/auth/domain/entities/user.dart';
+  4  
+
+lib/src/features/auth/data/repositories/auth_repository_impl.dart:
+  1  import 'package:dartz/dartz.dart';
+  2: import 'package:resultizer/src/core/error/error_handler.dart';
+  3: import 'package:resultizer/src/core/error/firebase_error_handler.dart';
+  4: import 'package:resultizer/src/core/error/response_status.dart';
+  5: import 'package:resultizer/src/core/network/network_info.dart';
+  6: import 'package:resultizer/src/features/auth/data/datasources/auth_datasource.dart';
+  7: import 'package:resultizer/src/features/auth/domain/entities/user.dart';
+  8: import 'package:resultizer/src/features/auth/domain/mappers/mappers.dart';
+  9: import 'package:resultizer/src/features/auth/domain/repositories/auth_repository.dart';
+  10  
+
+lib/src/features/auth/domain/mappers/mappers.dart:
+  1: import 'package:resultizer/src/features/auth/data/models/user_model.dart';
+  2: import 'package:resultizer/src/features/auth/domain/entities/user.dart';
+  3  
+
+lib/src/features/auth/domain/repositories/auth_repository.dart:
+  1  import 'package:dartz/dartz.dart';
+  2: import 'package:resultizer/src/core/error/error_handler.dart';
+  3: import 'package:resultizer/src/features/auth/domain/entities/user.dart';
+  4  
+
+lib/src/features/auth/domain/use_cases/google_sign_in_use_case.dart:
+  1  import 'package:dartz/dartz.dart';
+  2: import 'package:resultizer/src/core/error/error_handler.dart';
+  3: import 'package:resultizer/src/core/usecase/usecase.dart';
+  4: import 'package:resultizer/src/features/auth/domain/entities/user.dart';
+  5: import 'package:resultizer/src/features/auth/domain/repositories/auth_repository.dart';
+  6  
+
+lib/src/features/auth/domain/use_cases/login_use_case.dart:
+  2  
+  3: import 'package:resultizer/src/core/error/error_handler.dart';
+  4: import 'package:resultizer/src/core/usecase/usecase.dart';
+  5: import 'package:resultizer/src/features/auth/domain/entities/user.dart';
+  6: import 'package:resultizer/src/features/auth/domain/repositories/auth_repository.dart';
+  7  
+
+lib/src/features/auth/domain/use_cases/sign_out_use_case.dart:
+  1  import 'package:dartz/dartz.dart';
+  2: import 'package:resultizer/src/core/error/error_handler.dart';
+  3: import 'package:resultizer/src/core/usecase/usecase.dart';
+  4: import 'package:resultizer/src/features/auth/domain/repositories/auth_repository.dart';
+  5  
+
+lib/src/features/auth/domain/use_cases/sign_up_use_case.dart:
+  2  
+  3: import 'package:resultizer/src/core/error/error_handler.dart';
+  4: import 'package:resultizer/src/core/usecase/usecase.dart';
+  5: import 'package:resultizer/src/features/auth/domain/entities/user.dart';
+  6: import 'package:resultizer/src/features/auth/domain/repositories/auth_repository.dart';
+  7  
+
+lib/src/features/auth/presentation/cubit/auth_cubit.dart:
+  1  import 'package:bloc/bloc.dart';
+  2: import 'package:resultizer/src/core/usecase/usecase.dart';
+  3: import 'package:resultizer/src/features/auth/domain/use_cases/google_sign_in_use_case.dart';
+  4: import 'package:resultizer/src/features/auth/domain/use_cases/login_use_case.dart';
+  5: import 'package:resultizer/src/features/auth/domain/use_cases/sign_out_use_case.dart';
+  6: import 'package:resultizer/src/features/auth/domain/use_cases/sign_up_use_case.dart';
+  7: import 'package:resultizer/src/features/auth/presentation/cubit/auth_state.dart';
+  8  
+
+lib/src/features/auth/presentation/screens/login_screen.dart:
+  4  import 'package:flutter_bloc/flutter_bloc.dart';
+  5: import 'package:resultizer/src/config/app_route.dart';
+  6: import 'package:resultizer/src/features/auth/presentation/cubit/auth_cubit.dart';
+  7  
+
+lib/src/features/odds/data/models/odds_model.dart:
+  2  
+  3: import 'package:resultizer/src/core/domain/entities/betting_odds.dart';
+  4  
+
+lib/src/features/odds/data/repositories/betting_odds_repository_impl.dart:
+  2  import 'package:dio/dio.dart';
+  3: import 'package:resultizer/src/core/domain/mappers/mappers.dart';
+  4  
+
+lib/src/features/odds/presentation/cubit/betting_odds_cubit.dart:
+  1  import 'package:bloc/bloc.dart';
+  2: import 'package:resultizer/src/core/utils/app_strings.dart';
+  3  
+
+lib/src/features/screens/onboarding_screen/onboarding_screen.dart:
+  2  import 'package:flutter/material.dart';
+  3: import 'package:resultizer/src/features/auth/presentation/screens/login_screen.dart';
+  4: import 'package:resultizer/src/features/soccer/presentation/screens/offers_screen.dart';
+  5  import 'dart:async';
+
+lib/src/features/soccer/data/datasources/soccer_data_source.dart:
+  1  import 'package:dio/dio.dart';
+  2: import 'package:resultizer/src/features/odds/data/models/odds_model.dart';
+  3  import '../models/standings_model.dart';
+
+lib/src/features/soccer/data/repositories/soccer_repository_impl.dart:
+  2  import 'package:dio/dio.dart';
+  3: import 'package:resultizer/src/core/domain/entities/league.dart';
+  4  
+
+lib/src/features/soccer/domain/entities/league_of_fixture.dart:
+  1  import 'package:equatable/equatable.dart';
+  2: import 'package:resultizer/src/core/domain/entities/betting_odds.dart';
+  3  
+
+lib/src/features/soccer/domain/repositories/soccer_repository.dart:
+  1  import 'package:dartz/dartz.dart';
+  2: import 'package:resultizer/src/core/domain/entities/league.dart';
+  3  
+
+lib/src/features/soccer/presentation/screens/betting_tips_screen.dart:
+  1  import 'package:flutter/material.dart';
+  2: import 'package:resultizer/src/features/auth/presentation/screens/login_screen.dart';
+  3  
+
+lib/src/features/soccer/presentation/screens/bettings_odds_screen.dart:
+  3  import 'package:intl/intl.dart';
+  4: import 'package:resultizer/src/config/app_constants.dart';
+  5: import 'package:resultizer/src/core/domain/entities/betting_odds.dart';
+  6  
+
+test/widget_test.dart:
+  3  
+  4: import 'package:resultizer/src/my_app.dart';
+  5  

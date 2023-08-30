@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:odd_sprat/src/core/error/error_handler.dart';
-import 'package:odd_sprat/src/features/auth/domain/entities/user.dart';
+import 'package:resultizer/src/core/error/error_handler.dart';
+import 'package:resultizer/src/features/auth/domain/entities/user.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, User>> signUpWithEmail(

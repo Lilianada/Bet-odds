@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:odd_sprat/src/features/odds/data/models/odds_model.dart';
+import 'package:resultizer/src/features/odds/data/models/odds_model.dart';
 import '../models/standings_model.dart';
 import '../../domain/use_cases/standings_usecase.dart';
 import '../../../../core/api/dio_helper.dart';

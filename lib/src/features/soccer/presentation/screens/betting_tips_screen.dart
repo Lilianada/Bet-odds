@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:odd_sprat/src/features/auth/presentation/screens/login_screen.dart';
+import 'package:resultizer/src/features/auth/presentation/screens/login_screen.dart';
 
 class BettingTipsScreen extends StatelessWidget {
   final List<Tipster> tipsters = [

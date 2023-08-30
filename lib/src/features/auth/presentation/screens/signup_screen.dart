@@ -105,7 +105,7 @@ class _SignupScreenState extends State<SignupScreen> {
             children: [
               const SizedBox(height: 32.0),
               Image.asset(
-                'assets/images/Oddsprat_Logo.png',
+                'assets/logos/Resultizer_Logo_Black1.png',
                 height: 100,
               ),
               const SizedBox(height: 20),
@@ -113,7 +113,7 @@ class _SignupScreenState extends State<SignupScreen> {
               TextFormField(
                 controller: _usernameController,
                 decoration: const InputDecoration(
-                  labelText: "User Name",
+                  labelText: "Name",
                   prefixIcon:
                       Icon(Icons.person, color: AppColors.labelTextStyle),
                   labelStyle: TextStyle(color: AppColors.labelTextStyle),

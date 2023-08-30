@@ -35,7 +35,7 @@ class OffersScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading:
-            Image.asset("assets/images/Oddsprat_Logo.png", fit: BoxFit.contain),
+            Image.asset("assets/logos/Resultizer_Logo_Black1.png", fit: BoxFit.contain),
         title:
             const Text("Offers", style: TextStyle(color: AppColors.background)),
         backgroundColor: Colors.white,

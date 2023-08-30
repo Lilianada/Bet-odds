@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:odd_sprat/src/core/domain/entities/betting_odds.dart';
+import 'package:resultizer/src/core/domain/entities/betting_odds.dart';
 
 class BettingOddsModel {
   final DateTime update;

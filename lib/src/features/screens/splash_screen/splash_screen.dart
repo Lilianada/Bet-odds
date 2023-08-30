@@ -35,8 +35,8 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
               Image.asset(
-                'assets/images/Oddsprat_Logo.png',
-                height: 150,
+                'assets/logos/Resultizer_Logo_Black1.png',
+                height: 80,
               ),
             Text(
               'Live scores & betting tips',

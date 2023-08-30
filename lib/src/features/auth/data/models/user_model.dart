@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:odd_sprat/src/features/auth/domain/entities/user.dart';
+import 'package:resultizer/src/features/auth/domain/entities/user.dart';
 
 class UserModel extends User {
   final String id;

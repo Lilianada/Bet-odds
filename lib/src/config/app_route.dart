@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:odd_sprat/src/features/odds/presentation/cubit/betting_odds_cubit.dart';
-import 'package:odd_sprat/src/features/auth/presentation/screens/login_screen.dart';
-import 'package:odd_sprat/src/features/screens/splash_screen/splash_screen.dart';
-import 'package:odd_sprat/src/features/soccer/presentation/screens/bettings_odds_screen.dart';
+import 'package:resultizer/src/features/odds/presentation/cubit/betting_odds_cubit.dart';
+import 'package:resultizer/src/features/auth/presentation/screens/login_screen.dart';
+import 'package:resultizer/src/features/screens/splash_screen/splash_screen.dart';
+import 'package:resultizer/src/features/soccer/presentation/screens/bettings_odds_screen.dart';
 
 import '../container_injector.dart';
 import '../core/domain/entities/soccer_fixture.dart';

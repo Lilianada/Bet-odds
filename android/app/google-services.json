@@ -1,16 +1,16 @@
 {
   "project_info": {
     "project_number": "727599487003",
-    "firebase_url": "https://odd-sprat-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "odd-sprat",
-    "storage_bucket": "odd-sprat.appspot.com"
+    "firebase_url": "https://resultizer-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "resultizer",
+    "storage_bucket": "resultizer.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:727599487003:android:3c3cf503dfbe9f086880be",
         "android_client_info": {
-          "package_name": "com.example.odd_sprat"
+          "package_name": "com.example.resultizer"
         }
       },
       "oauth_client": [

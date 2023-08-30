@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:odd_sprat/src/config/app_constants.dart';
-import 'package:odd_sprat/src/core/domain/entities/betting_odds.dart';
+import 'package:resultizer/src/config/app_constants.dart';
+import 'package:resultizer/src/core/domain/entities/betting_odds.dart';
 
 import '../../../odds/data/models/odds_model.dart';
 import '../cubit/soccer_cubit.dart';
@@ -79,7 +79,7 @@ class _BettingOddsScreenState extends State<BettingOddsScreen> {
 
     return Scaffold(
        appBar: AppBar(
-        leading: Image.asset("assets/images/Oddsprat_Logo.png", fit: BoxFit.contain),
+        leading: Image.asset("assets/logos/Resultizer_Logo_Black1.png", fit: BoxFit.contain),
         title: const Text("Odds", style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
         elevation: 0,

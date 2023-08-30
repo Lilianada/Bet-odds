@@ -1,5 +1,5 @@
-name: odd_sprat
-description: OddSprat app
+name: resultizer
+description: Resultizer app
 
 publish_to: "none"
 
@@ -38,7 +38,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/Oddsprat_Logo.png
     - assets/images/no_matches.png
     - assets/images/no_stats.png
     - assets/images/Football_playground.png
@@ -47,3 +46,8 @@ flutter:
     - assets/images/download.jpeg
     - assets/images/skysports-manchester-city-fernandinho_5392783.jpg
     - assets/images/pl_completed_transfers.webp
+    - assets/logos/Resultizer_Logo_Black1.png
+    - assets/logos/Resultizer_Logo_White1.png
+    - assets/logos/Resultizer_Logo_White2.png
+    - assets/logos/Resultizer_Logo_Black2.png
+

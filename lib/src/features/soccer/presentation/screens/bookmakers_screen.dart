@@ -36,7 +36,7 @@ class BookmakersScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Image.asset("assets/images/Oddsprat_Logo.png", fit: BoxFit.contain),
+        leading: Image.asset("assets/logos/Resultizer_Logo_Black1.png", fit: BoxFit.contain),
         title: const Text("Bookmakers", style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
         elevation: 0,

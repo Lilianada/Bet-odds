@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.odd_sprat">
+    package="com.example.resultizer">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="Live score"

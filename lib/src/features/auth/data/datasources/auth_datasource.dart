@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:odd_sprat/src/core/error/firebase_error_handler.dart';
-import 'package:odd_sprat/src/features/auth/data/models/user_model.dart';
+import 'package:resultizer/src/core/error/firebase_error_handler.dart';
+import 'package:resultizer/src/features/auth/data/models/user_model.dart';
 
 abstract class AuthDatasource {
   final FirebaseAuth authInstance = FirebaseAuth.instance;

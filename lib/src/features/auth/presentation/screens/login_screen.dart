@@ -2,8 +2,8 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:odd_sprat/src/config/app_route.dart';
-import 'package:odd_sprat/src/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:resultizer/src/config/app_route.dart';
+import 'package:resultizer/src/features/auth/presentation/cubit/auth_cubit.dart';
 
 import '../../../../config/app_constants.dart';
 import '../cubit/auth_state.dart';
@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/images/Oddsprat_Logo.png',
+                'assets/logos/Resultizer_Logo_Black1.png',
                 height: 100,
               ),
               const SizedBox(height: 10),

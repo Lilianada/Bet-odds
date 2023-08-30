@@ -1,4 +1,4 @@
-import 'package:odd_sprat/src/features/odds/data/models/odds_model.dart';
+import 'package:resultizer/src/features/odds/data/models/odds_model.dart';
 
 import '../../models/fixture_league.dart';
 import '../../models/fixture_model.dart';
